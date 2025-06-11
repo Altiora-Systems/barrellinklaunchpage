@@ -16,8 +16,8 @@
   background-color: var(--color-background);
   padding: var(--space-5xl) 0 var(--space-5xl);
   text-align: center;
-  overflow-x: hidden;
   width: 100%;
+  /* Allow wave to extend beyond container */
 }
 
 .hero-section__content {
@@ -54,12 +54,14 @@
   z-index: 1;
 }
 
-/* Utility class for PNG wave image */
+/* Utility class for wave image - now optimized for SVG */
 .hero-section__wave.waves-2-2-icon {
-  width: 100%;
+  width: 100vw;
   height: 523px;
   opacity: 0.65;
   object-fit: cover;
+  /* Ensure SVG stretches edge to edge */
+  min-width: 100vw;
 }
 
 /* Responsive styles for the wave image */

@@ -10,7 +10,6 @@
   background-color: var(--color-background);
   margin-bottom: 0;
   width: 100%;
-  /* Remove overflow-x to prevent clipping of the wave */
 }
 
 .hero__wrapper {
@@ -22,8 +21,6 @@
   display: flex;
   justify-content: space-between;
   overflow: visible;
-  /* Remove overflow constraints that might affect the wave */
-  overflow-x: visible;
 }
 
 .hero__content {
@@ -139,32 +136,6 @@
   object-fit: contain;
 }
 
-.hero__wave-container {
-  position: relative;
-  width: 100%;
-  overflow: hidden;
-  margin-top: -60px;
-  z-index: 1;
-}
-
-.hero__wave {
-  position: absolute;
-  bottom: -60px;
-  width: 100vw;
-  max-width: none;
-  z-index: 1;
-  transform: translateX(-50%);
-  left: 50%;
-}
-
-/* Utility class for PNG wave image */
-.hero__wave.waves-2-2-icon {
-  width: 100%;
-  height: 523px;
-  opacity: 0.65;
-  object-fit: cover;
-}
-
 /* Responsive styles for the hero image */
 @media (max-width: var(--breakpoint-xl)) {
   .hero__image-container {
@@ -190,35 +161,12 @@
   }
 }
 
-/* Responsive styles for the wave image */
-@media (max-width: var(--breakpoint-xl)) {
-  .hero__wave.waves-2-2-icon {
-    height: 400px;
-  }
-}
-
-@media (max-width: var(--breakpoint-md)) {
-  .hero__wave.waves-2-2-icon {
-    height: 300px;
-    bottom: -30px;
-  }
-}
-
-@media (max-width: var(--breakpoint-sm)) {
-  .hero__wave.waves-2-2-icon {
-    height: 200px;
-    bottom: -20px;
-  }
-}
-
 /* Why BarrelLink Section */
 .why-section {
   background-color: var(--color-background);
   padding: 0 0 var(--space-4xl);
   position: relative;
   z-index: 2;
-  margin-top: -40px;
-  /* Ensure this section appears above the wave */
 }
 
 .why-section__inner {
@@ -327,10 +275,6 @@
   
   /* Hero image styles are now controlled by hero__image-container */
   
-  .hero__wave.waves-2-2-icon {
-    height: 400px;
-  }
-  
   .why-section__inner {
     padding: 0 var(--space-2xl);
   }
@@ -395,11 +339,6 @@
   
   /* Hero image styles are now controlled by hero__image-container */
   
-  .hero__wave.waves-2-2-icon {
-    height: 300px;
-    bottom: -30px;
-  }
-  
   .why-section__inner {
     padding: 0 var(--space-lg);
   }
@@ -451,13 +390,8 @@
     font-size: var(--text-sm);
   }
   
-  .hero__wave.waves-2-2-icon {
-    height: 200px;
-    bottom: -20px;
-  }
-  
   .why-section {
-    margin-top: -20px;
+    margin-top: 0;
   }
 }
 
