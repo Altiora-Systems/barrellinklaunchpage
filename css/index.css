@@ -40,6 +40,10 @@
   margin-bottom: 14px;
 }
 
+.hero__title-break {
+  white-space: nowrap;
+}
+
 .hero__subtitle {
   font-family: var(--font-primary);
   font-size: var(--text-xl);
@@ -358,6 +362,10 @@
   .hero__title {
     font-size: var(--text-4xl);
     line-height: 40px;
+  }
+  
+  .hero__title-break {
+    display: block;
   }
   
   .hero__subtitle {
