@@ -51,12 +51,12 @@
 </head>
 <body>
   <header class="header" role="banner">
-    <a href="/" aria-label="BarrelLink Home">
+    <a href="index.html" aria-label="BarrelLink Home">
       <img src="assets/images/Barrel Link_Tagline.png" alt="BarrelLink Logo" class="header__logo" width="200" height="38">
     </a>
     <nav class="header__nav" role="navigation" aria-label="Main Navigation">
-      <a href="/" class="nav__link">Home</a>
-      <a href="#hiw-signup-form" class="nav__btn">Sign Up</a>
+      <a href="index.html" class="nav__link">Home</a>
+      <a href="index.html" class="nav__btn">Sign Up</a>
     </nav>
     <button class="header__menu-toggle" aria-expanded="false" aria-controls="mobile-menu" aria-label="Toggle menu" tabindex="0">
       <span class="hamburger-line"></span>
@@ -65,19 +65,23 @@
     </button>
     <div class="header__mobile-nav" id="mobile-menu" aria-hidden="true">
       <nav aria-label="Mobile Navigation">
-        <a href="/" class="mobile-nav__link">Home</a>
-        <a href="#hiw-signup-form" class="mobile-nav__btn">Sign Up</a>
+        <a href="index.html" class="mobile-nav__link">Home</a>
+        <a href="index.html" class="mobile-nav__btn">Sign Up</a>
       </nav>
     </div>
   </header>
 
   <main role="main">
     <section class="hero-section" aria-labelledby="hero-title">
-      <div class="hero-section__content">
-        <h1 id="hero-title" class="hero-section__title">How It Works</h1>
-        <p class="hero-section__text">At BarrelLink, we're transforming the way the Caribbean Diaspora ships items home. Our platform streamlines the entire process, making it easier than ever to find, schedule, and track your shipments.</p>
+      <div class="howitworks-hero-card">
+        <h1 id="hero-title" class="howitworks-hero-title">How It Works</h1>
+        <p class="howitworks-hero-desc">
+          At <span class="howitworks-hero-bl">Barrel<span class="howitworks-hero-bl-orange">Link</span></span>, we're transforming the way the Caribbean Diaspora ships items home. Our platform streamlines the entire process, making it easier than ever to find, schedule, and track your shipments.
+        </p>
       </div>
-      <img src="assets/illustrations/waves_2.png" alt="" class="hero-section__wave waves-2-2-icon" aria-hidden="true" loading="lazy">
+      <div class="howitworks-hero-wave-bg">
+        <img src="assets/illustrations/waves-updated.svg" alt="Background wave" class="howitworks-hero-wave-img" aria-hidden="true" loading="eager">
+      </div>
     </section>
 
     <section class="steps-section">

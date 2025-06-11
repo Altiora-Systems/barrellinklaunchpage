@@ -51,30 +51,16 @@
 </head>
 <body>
   <header class="header" role="banner">
-    <a href="/" aria-label="BarrelLink Home">
+    <a href="index.html" aria-label="BarrelLink Home">
       <img src="assets/images/Barrel Link_Tagline.png" alt="BarrelLink Logo" class="header__logo" width="200" height="38">
     </a>
-    <nav class="header__nav" role="navigation" aria-label="Main Navigation">
-      <a href="how-it-works.html" class="nav__link">How It Works</a>
-      <a href="#signup-form" class="nav__btn">Sign Up</a>
-    </nav>
-    <button class="header__menu-toggle" aria-expanded="false" aria-controls="mobile-menu" aria-label="Toggle menu" tabindex="0">
-      <span class="hamburger-line"></span>
-      <span class="hamburger-line"></span>
-      <span class="hamburger-line"></span>
-    </button>
-    <div class="header__mobile-nav" id="mobile-menu" aria-hidden="true">
-      <nav aria-label="Mobile Navigation">
-        <a href="how-it-works.html" class="mobile-nav__link">How It Works</a>
-        <a href="#signup-form" class="mobile-nav__btn">Sign Up</a>
-      </nav>
-    </div>
+    <a href="how-it-works.html" class="header__howitworks-btn">How It Works</a>
   </header>
 
   <main class="hero" role="main">
     <div class="hero__wrapper">
       <div class="hero__content">
-        <h1 class="hero__title">Coming Soon</h1>
+        <h1 class="hero__title"><span>Coming Soon</span></h1>
         <p class="hero__subtitle">A marketplace purpose built for the Caribbean Diaspora to ship your items home.</p>
         <form class="hero__form" id="homepage-signup" aria-labelledby="signup-heading" novalidate>
           <h2 id="signup-heading" class="visually-hidden">Join Our Waitlist</h2>
@@ -95,16 +81,17 @@
           </div>
           <button type="submit" class="form__btn">Sign Up</button>
         </form>
+        <div class="hero__background-wave">
+          <img src="assets/illustrations/waves-updated.svg" alt="Background wave" class="background-wave-svg" aria-hidden="true" loading="eager">
+        </div>
       </div>
       <div class="hero__image-container">
         <img 
-          src="assets/images/hero-hand-phone_2.png" 
-          srcset="assets/images/hero-hand-phone_2.png 745w"
-          sizes="(max-width: 768px) 90vw, (max-width: 1200px) 50vw, 745px"
+          src="assets/images/hero-hand-phone-updated.svg" 
           alt="Mobile app preview showing BarrelLink interface" 
           class="hero__image" 
-          width="745" 
-          height="917" 
+          width="900" 
+          height="1100" 
           loading="eager"
           fetchpriority="high">
       </div>
