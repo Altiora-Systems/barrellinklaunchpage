@@ -272,14 +272,23 @@ function validateEmail(email) {
 
 /**
  * Initialize core features and functionality
- * Used both internally and can be called by other modules
+ * Enhanced with responsive design system
  */
 function initCore() {
-  // Initialize mobile menu
-  new MobileMenu();
+  // Initialize responsive manager first
+  window.responsiveManager = new ResponsiveManager();
+  
+  // Initialize enhanced mobile menu
+  new EnhancedMobileMenu();
   
   // Initialize fade-in animations
   new FadeInObserver();
+  
+  // Initialize responsive form enhancer
+  new ResponsiveFormEnhancer();
+  
+  // Initialize responsive image manager
+  new ResponsiveImageManager();
 
   // Initialize smooth scroll for anchor links
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -292,10 +301,9 @@ function initCore() {
     });
   });
 
-  // Header shadow on scroll
+  // Header shadow on scroll with responsive behavior
   const header = document.querySelector('.header');
   
-  // Use debounce for scroll events for better performance
   const handleScroll = debounce(() => {
     if (window.scrollY > 20) {
       header?.classList.add('scrolled');
@@ -309,7 +317,29 @@ function initCore() {
   // Apply fade-in to hero content elements
   document.querySelectorAll('.hero__content, .hero__subtitle, .hero__image').forEach(el => el.classList.add('fade-in'));
   
-  console.log('Core features initialized');
+  // Add responsive classes to body for CSS targeting
+  document.body.classList.add(`breakpoint-${window.responsiveManager.getCurrentBreakpoint()}`);
+  document.body.classList.add(`orientation-${window.responsiveManager.getOrientation()}`);
+  
+  // Update body classes on breakpoint/orientation changes
+  window.responsiveManager.onBreakpointChange((newBreakpoint, oldBreakpoint) => {
+    document.body.classList.remove(`breakpoint-${oldBreakpoint}`);
+    document.body.classList.add(`breakpoint-${newBreakpoint}`);
+  });
+  
+  window.responsiveManager.onOrientationChange((newOrientation, oldOrientation) => {
+    document.body.classList.remove(`orientation-${oldOrientation}`);
+    document.body.classList.add(`orientation-${newOrientation}`);
+  });
+  
+  // Add touch device detection
+  if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
+    document.body.classList.add('touch-device');
+  } else {
+    document.body.classList.add('no-touch');
+  }
+  
+  console.log('Core features initialized with responsive design system');
 }
 
 // Initialize Core Features when DOM is ready
@@ -327,6 +357,10 @@ window.Toast = Toast;
 window.validateEmail = validateEmail;
 window.smoothScrollTo = smoothScrollTo;
 window.debounce = debounce;
+window.ResponsiveManager = ResponsiveManager;
+window.EnhancedMobileMenu = EnhancedMobileMenu;
+window.ResponsiveFormEnhancer = ResponsiveFormEnhancer;
+window.ResponsiveImageManager = ResponsiveImageManager;
 
 // Proper ES module exports
 export {
@@ -335,5 +369,430 @@ export {
   smoothScrollTo,
   debounce,
   MobileMenu,
-  FadeInObserver
+  FadeInObserver,
+  ResponsiveManager,
+  EnhancedMobileMenu,
+  ResponsiveFormEnhancer,
+  ResponsiveImageManager
 };
+
+/* ===========================
+   RESPONSIVE UTILITIES AND VIEWPORT MANAGEMENT
+   =========================== */
+
+/**
+ * Enhanced functionality for responsive design system
+ */
+
+/**
+ * Responsive Breakpoint Manager
+ * Manages responsive breakpoints and provides utilities for JavaScript responsive behavior
+ */
+class ResponsiveManager {
+  constructor() {
+    // Define breakpoints (matching CSS variables)
+    this.breakpoints = {
+      xs: 360,
+      sm: 480,
+      md: 768,
+      lg: 992,
+      xl: 1200,
+      '2xl': 1440,
+      '3xl': 1920
+    };
+    
+    this.currentBreakpoint = null;
+    this.orientation = null;
+    this.viewportWidth = window.innerWidth;
+    this.viewportHeight = window.innerHeight;
+    
+    this.callbacks = {
+      breakpointChange: [],
+      orientationChange: [],
+      resize: []
+    };
+    
+    this.init();
+  }
+  
+  init() {
+    this.updateViewport();
+    this.bindEvents();
+    
+    // Set initial state
+    this.checkBreakpoint();
+    this.checkOrientation();
+  }
+  
+  bindEvents() {
+    // Use debounced resize handler for better performance
+    const debouncedResize = debounce(() => {
+      this.handleResize();
+    }, 150);
+    
+    window.addEventListener('resize', debouncedResize);
+    window.addEventListener('orientationchange', () => {
+      // Small delay to ensure viewport dimensions are updated
+      setTimeout(() => this.handleOrientationChange(), 100);
+    });
+  }
+  
+  updateViewport() {
+    this.viewportWidth = window.innerWidth;
+    this.viewportHeight = window.innerHeight;
+  }
+  
+  handleResize() {
+    const oldBreakpoint = this.currentBreakpoint;
+    const oldWidth = this.viewportWidth;
+    const oldHeight = this.viewportHeight;
+    
+    this.updateViewport();
+    this.checkBreakpoint();
+    this.checkOrientation();
+    
+    // Trigger resize callbacks
+    this.callbacks.resize.forEach(callback => {
+      callback({
+        width: this.viewportWidth,
+        height: this.viewportHeight,
+        oldWidth,
+        oldHeight,
+        breakpoint: this.currentBreakpoint,
+        orientation: this.orientation
+      });
+    });
+    
+    // Trigger breakpoint change if needed
+    if (oldBreakpoint !== this.currentBreakpoint) {
+      this.callbacks.breakpointChange.forEach(callback => {
+        callback(this.currentBreakpoint, oldBreakpoint);
+      });
+    }
+  }
+  
+  handleOrientationChange() {
+    const oldOrientation = this.orientation;
+    this.updateViewport();
+    this.checkOrientation();
+    
+    if (oldOrientation !== this.orientation) {
+      this.callbacks.orientationChange.forEach(callback => {
+        callback(this.orientation, oldOrientation);
+      });
+    }
+  }
+  
+  checkBreakpoint() {
+    const width = this.viewportWidth;
+    let newBreakpoint = 'xs';
+    
+    if (width >= this.breakpoints['3xl']) {
+      newBreakpoint = '3xl';
+    } else if (width >= this.breakpoints['2xl']) {
+      newBreakpoint = '2xl';
+    } else if (width >= this.breakpoints.xl) {
+      newBreakpoint = 'xl';
+    } else if (width >= this.breakpoints.lg) {
+      newBreakpoint = 'lg';
+    } else if (width >= this.breakpoints.md) {
+      newBreakpoint = 'md';
+    } else if (width >= this.breakpoints.sm) {
+      newBreakpoint = 'sm';
+    }
+    
+    this.currentBreakpoint = newBreakpoint;
+  }
+  
+  checkOrientation() {
+    this.orientation = this.viewportWidth > this.viewportHeight ? 'landscape' : 'portrait';
+  }
+  
+  // Public API methods
+  getCurrentBreakpoint() {
+    return this.currentBreakpoint;
+  }
+  
+  getViewportSize() {
+    return {
+      width: this.viewportWidth,
+      height: this.viewportHeight
+    };
+  }
+  
+  getOrientation() {
+    return this.orientation;
+  }
+  
+  isMobile() {
+    return this.currentBreakpoint === 'xs' || this.currentBreakpoint === 'sm';
+  }
+  
+  isTablet() {
+    return this.currentBreakpoint === 'md';
+  }
+  
+  isDesktop() {
+    return ['lg', 'xl', '2xl', '3xl'].includes(this.currentBreakpoint);
+  }
+  
+  isLargeScreen() {
+    return ['2xl', '3xl'].includes(this.currentBreakpoint);
+  }
+  
+  // Event subscription methods
+  onBreakpointChange(callback) {
+    this.callbacks.breakpointChange.push(callback);
+  }
+  
+  onOrientationChange(callback) {
+    this.callbacks.orientationChange.push(callback);
+  }
+  
+  onResize(callback) {
+    this.callbacks.resize.push(callback);
+  }
+  
+  // Utility method to check if current viewport matches a breakpoint
+  matches(breakpoint) {
+    if (typeof breakpoint === 'string') {
+      return this.currentBreakpoint === breakpoint;
+    }
+    if (Array.isArray(breakpoint)) {
+      return breakpoint.includes(this.currentBreakpoint);
+    }
+    return false;
+  }
+  
+  // Method to get CSS media query string
+  getMediaQuery(breakpoint) {
+    const bp = this.breakpoints[breakpoint];
+    return bp ? `(min-width: ${bp}px)` : null;
+  }
+}
+
+/**
+ * Enhanced Mobile Menu with Responsive Features
+ * Extends the existing MobileMenu with better responsive behavior
+ */
+class EnhancedMobileMenu extends MobileMenu {
+  constructor() {
+    super();
+    this.responsiveManager = null;
+    this.initResponsive();
+  }
+  
+  initResponsive() {
+    // Wait for ResponsiveManager to be available
+    if (window.responsiveManager) {
+      this.responsiveManager = window.responsiveManager;
+      this.setupResponsiveBehavior();
+    } else {
+      // Retry after a short delay
+      setTimeout(() => this.initResponsive(), 100);
+    }
+  }
+  
+  setupResponsiveBehavior() {
+    // Close menu when switching from mobile to desktop
+    this.responsiveManager.onBreakpointChange((newBreakpoint, oldBreakpoint) => {
+      const wasMobile = ['xs', 'sm', 'md'].includes(oldBreakpoint);
+      const isDesktop = ['lg', 'xl', '2xl', '3xl'].includes(newBreakpoint);
+      
+      if (wasMobile && isDesktop && this.isOpen) {
+        this.closeMenu();
+      }
+    });
+    
+    // Handle orientation changes on mobile
+    this.responsiveManager.onOrientationChange((orientation) => {
+      if (this.responsiveManager.isMobile() && this.isOpen) {
+        // Adjust menu height for landscape mode
+        if (orientation === 'landscape') {
+          this.nav.style.paddingTop = '60px';
+        } else {
+          this.nav.style.paddingTop = '';
+        }
+      }
+    });
+  }
+  
+  openMenu() {
+    super.openMenu();
+    
+    // Additional responsive behavior
+    if (this.responsiveManager) {
+      const { orientation } = this.responsiveManager;
+      
+      // Adjust for landscape mobile
+      if (this.responsiveManager.isMobile() && orientation === 'landscape') {
+        this.nav.style.paddingTop = '60px';
+      }
+    }
+    
+    // Focus management for accessibility
+    const firstLink = this.nav.querySelector('a');
+    if (firstLink) {
+      firstLink.focus();
+    }
+  }
+  
+  closeMenu() {
+    super.closeMenu();
+    
+    // Reset any responsive styles
+    this.nav.style.paddingTop = '';
+    
+    // Return focus to toggle button
+    this.toggle.focus();
+  }
+}
+
+/**
+ * Form Enhancement for Responsive Design
+ * Improves form behavior across different screen sizes
+ */
+class ResponsiveFormEnhancer {
+  constructor() {
+    this.forms = document.querySelectorAll('form[id*="signup"], .hero__form, .cta-form');
+    this.responsiveManager = null;
+    this.init();
+  }
+  
+  init() {
+    if (window.responsiveManager) {
+      this.responsiveManager = window.responsiveManager;
+      this.enhanceForms();
+    } else {
+      setTimeout(() => this.init(), 100);
+    }
+  }
+  
+  enhanceForms() {
+    this.forms.forEach(form => this.enhanceForm(form));
+    
+    // Listen for breakpoint changes
+    this.responsiveManager.onBreakpointChange(() => {
+      this.forms.forEach(form => this.updateFormLayout(form));
+    });
+  }
+  
+  enhanceForm(form) {
+    const inputs = form.querySelectorAll('input, textarea, select');
+    const buttons = form.querySelectorAll('button, input[type="submit"]');
+    
+    // Enhance inputs for mobile
+    inputs.forEach(input => {
+      // Prevent zoom on iOS
+      if (this.responsiveManager.isMobile()) {
+        input.style.fontSize = '16px';
+      }
+      
+      // Add touch-friendly behavior
+      input.addEventListener('focus', () => {
+        if (this.responsiveManager.isMobile()) {
+          // Scroll input into view on mobile
+          setTimeout(() => {
+            input.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }, 300);
+        }
+      });
+    });
+    
+    // Enhance buttons
+    buttons.forEach(button => {
+      button.addEventListener('touchstart', () => {
+        // Add active state for touch devices
+        button.classList.add('touch-active');
+      });
+      
+      button.addEventListener('touchend', () => {
+        setTimeout(() => {
+          button.classList.remove('touch-active');
+        }, 150);
+      });
+    });
+    
+    this.updateFormLayout(form);
+  }
+  
+  updateFormLayout(form) {
+    const isMobile = this.responsiveManager.isMobile();
+    const isTablet = this.responsiveManager.isTablet();
+    
+    // Update form layout based on screen size
+    if (isMobile) {
+      form.classList.add('form--mobile');
+      form.classList.remove('form--tablet', 'form--desktop');
+    } else if (isTablet) {
+      form.classList.add('form--tablet');
+      form.classList.remove('form--mobile', 'form--desktop');
+    } else {
+      form.classList.add('form--desktop');
+      form.classList.remove('form--mobile', 'form--tablet');
+    }
+  }
+}
+
+/**
+ * Image Optimization for Responsive Design
+ * Handles responsive images and lazy loading optimization
+ */
+class ResponsiveImageManager {
+  constructor() {
+    this.images = document.querySelectorAll('img[data-responsive], .hero__image, .why-card__image');
+    this.responsiveManager = null;
+    this.init();
+  }
+  
+  init() {
+    if (window.responsiveManager) {
+      this.responsiveManager = window.responsiveManager;
+      this.optimizeImages();
+    } else {
+      setTimeout(() => this.init(), 100);
+    }
+  }
+  
+  optimizeImages() {
+    this.images.forEach(img => this.optimizeImage(img));
+    
+    // Re-optimize on breakpoint changes
+    this.responsiveManager.onBreakpointChange(() => {
+      this.images.forEach(img => this.updateImageSize(img));
+    });
+  }
+  
+  optimizeImage(img) {
+    // Add loading state
+    img.addEventListener('load', () => {
+      img.classList.add('loaded');
+    });
+    
+    // Add error handling
+    img.addEventListener('error', () => {
+      img.classList.add('error');
+      console.warn('Failed to load image:', img.src);
+    });
+    
+    this.updateImageSize(img);
+  }
+  
+  updateImageSize(img) {
+    const isMobile = this.responsiveManager.isMobile();
+    const isTablet = this.responsiveManager.isTablet();
+    
+    // Update image loading priority based on viewport
+    if (img.classList.contains('hero__image')) {
+      img.loading = isMobile ? 'eager' : 'eager';
+      img.fetchpriority = 'high';
+    } else {
+      img.loading = 'lazy';
+    }
+    
+    // Update alt text for screen readers on mobile
+    if (isMobile && img.hasAttribute('data-mobile-alt')) {
+      img.alt = img.getAttribute('data-mobile-alt');
+    }
+  }
+}
