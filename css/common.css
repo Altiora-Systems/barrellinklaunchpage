@@ -112,7 +112,8 @@ html, body {
 
 body {
   width: 100%;
-  /* Allow horizontal overflow for edge-to-edge elements like waves */
+  /* Allow horizontal overflow for edge-to-edge elements like waves but hide scrollbars */
+  overflow-x: hidden;
 }
 
 a { 
