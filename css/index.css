@@ -6,10 +6,11 @@
 /* Hero Section */
 .hero {
   position: relative;
-  overflow: hidden;
   min-height: 700px;
   background-color: var(--color-background);
   margin-bottom: 0;
+  width: 100%;
+  /* Remove overflow-x to prevent clipping of the wave */
 }
 
 .hero__wrapper {
@@ -20,6 +21,9 @@
   padding: 44px 0 0;
   display: flex;
   justify-content: space-between;
+  overflow: visible;
+  /* Remove overflow constraints that might affect the wave */
+  overflow-x: visible;
 }
 
 .hero__content {
@@ -54,11 +58,16 @@
   margin-top: 0;
   width: 100%;
   max-width: 544px;
+  gap: var(--space-md);
+  transition: all var(--transition-medium);
 }
 
 .form__input {
-  width: 420px;
+  width: 100%;
+  max-width: 420px;
+  flex: 1;
   height: 48px;
+  min-height: 48px;
   border: 1px solid var(--color-border);
   border-radius: var(--border-radius-md);
   padding: 0 var(--space-md);
@@ -67,7 +76,11 @@
   font-weight: 500;
   color: var(--color-text-body);
   background-color: #fff;
-  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+  transition: border-color var(--transition-fast), 
+              box-shadow var(--transition-fast),
+              width var(--transition-medium),
+              max-width var(--transition-medium);
+  min-width: 140px; /* Ensure the input doesn't get too small */
 }
 
 .form__input::placeholder {
@@ -82,11 +95,13 @@
 
 .form__btn {
   margin-left: var(--space-md);
-  width: 108px;
+  min-width: 108px;
+  width: auto;
   height: 48px;
   background-color: var(--color-accent);
   color: var(--color-text-light);
   border: none;
+  flex-shrink: 0;
   border-radius: var(--border-radius-md);
   font-family: var(--font-secondary);
   font-size: var(--text-sm);
@@ -94,8 +109,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background-color var(--transition-fast), transform var(--transition-fast);
+  transition: background-color var(--transition-fast), 
+              transform var(--transition-fast), 
+              width var(--transition-medium),
+              margin var(--transition-medium);
   cursor: pointer;
+  white-space: nowrap;
+  padding: 0 var(--space-lg);
 }
 
 .form__btn:hover {
@@ -103,30 +123,92 @@
   transform: scale(1.05);
 }
 
-.hero__image {
-  position: absolute;
-  top: 195px;
-  right: var(--space-5xl);
-  width: 745px;
-  height: 917px;
-  object-fit: contain;
+.hero__image-container {
+  position: relative;
   z-index: 3;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-start;
+}
+
+.hero__image {
+  position: relative;
+  width: 745px;
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+.hero__wave-container {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  margin-top: -60px;
+  z-index: 1;
 }
 
 .hero__wave {
   position: absolute;
   bottom: -60px;
-  left: 0;
-  width: 100%;
+  width: 100vw;
+  max-width: none;
   z-index: 1;
+  transform: translateX(-50%);
+  left: 50%;
 }
 
 /* Utility class for PNG wave image */
-.waves-2-2-icon {
+.hero__wave.waves-2-2-icon {
   width: 100%;
   height: 523px;
   opacity: 0.65;
   object-fit: cover;
+}
+
+/* Responsive styles for the hero image */
+@media (max-width: var(--breakpoint-xl)) {
+  .hero__image-container {
+    align-self: flex-end;
+  }
+
+  .hero__image {
+    width: 600px;
+  }
+}
+
+@media (max-width: var(--breakpoint-md)) {
+  .hero__image-container {
+    justify-content: center;
+    margin: var(--space-2xl) auto 0;
+    max-width: 90%;
+  }
+  
+  .hero__image {
+    position: relative;
+    width: 100%;
+    max-width: 500px;
+  }
+}
+
+/* Responsive styles for the wave image */
+@media (max-width: var(--breakpoint-xl)) {
+  .hero__wave.waves-2-2-icon {
+    height: 400px;
+  }
+}
+
+@media (max-width: var(--breakpoint-md)) {
+  .hero__wave.waves-2-2-icon {
+    height: 300px;
+    bottom: -30px;
+  }
+}
+
+@media (max-width: var(--breakpoint-sm)) {
+  .hero__wave.waves-2-2-icon {
+    height: 200px;
+    bottom: -20px;
+  }
 }
 
 /* Why BarrelLink Section */
@@ -136,6 +218,7 @@
   position: relative;
   z-index: 2;
   margin-top: -40px;
+  /* Ensure this section appears above the wave */
 }
 
 .why-section__inner {
@@ -164,20 +247,37 @@
   color: var(--color-text-dark);
 }
 
+/* Modular card layout with CSS Grid */
 .why-section__cards {
-  display: flex;
-  justify-content: flex-start;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
   gap: var(--space-2xl);
   margin-top: var(--space-2xl);
+  width: 100%;
+  transition: grid-template-columns 0.3s ease;
+  grid-auto-rows: 1fr; /* Equal height rows */
 }
 
 .why-card {
-  width: 240px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: flex-start;
   text-align: center;
+  width: 100%;
+  height: 100%;
+  transition: all 0.3s ease;
+}
+
+.why-card:hover {
+  transform: translateY(-5px);
+  transition: transform 0.3s ease;
+}
+
+.why-card:focus-within {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 4px;
+  border-radius: var(--border-radius-md);
 }
 
 .why-card__image {
@@ -206,11 +306,7 @@
 
 /* Responsive */
 @media (max-width: var(--breakpoint-2xl)) {
-  .hero__image {
-    right: 0;
-    width: 600px;
-    height: auto;
-  }
+  /* These styles are now controlled by the hero__image-container */
 }
 
 @media (max-width: var(--breakpoint-xl)) {
@@ -221,20 +317,38 @@
   
   .hero__content {
     padding-left: var(--space-2xl);
+    padding-right: var(--space-2xl);
     max-width: 100%;
   }
   
-  .hero__image {
-    position: relative;
-    top: var(--space-2xl);
-    right: -100px;
-    width: 500px;
-    height: auto;
-    align-self: flex-end;
+  .hero__form {
+    max-width: 100%;
+  }
+  
+  /* Hero image styles are now controlled by hero__image-container */
+  
+  .hero__wave.waves-2-2-icon {
+    height: 400px;
   }
   
   .why-section__inner {
     padding: 0 var(--space-2xl);
+  }
+  
+  .why-section__cards {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-xl);
+  }
+}
+
+@media (max-width: var(--breakpoint-lg)) {
+  .why-section__cards {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-xl);
+  }
+  
+  .why-section__inner {
+    padding: 0 var(--space-xl);
   }
 }
 
@@ -256,25 +370,34 @@
   
   .hero__form {
     flex-direction: column;
+    gap: var(--space-md);
+    width: 100%;
+    max-width: 100%;
   }
   
   .form__input {
     width: 100%;
+    max-width: 100%;
+    min-width: 0; /* Reset min-width to allow full responsiveness */
   }
   
   .form__btn {
     margin-left: 0;
-    margin-top: var(--space-md);
+    width: 100%;
+    min-height: 48px;
+    min-width: 100%; /* Ensure button takes full width */
+  }
+  
+  /* Ensure form group has proper spacing */
+  .form__group {
     width: 100%;
   }
   
-  .hero__image {
-    position: relative;
-    top: var(--space-2xl);
-    right: 0;
-    width: 100%;
-    margin: 0 auto;
-    display: block;
+  /* Hero image styles are now controlled by hero__image-container */
+  
+  .hero__wave.waves-2-2-icon {
+    height: 300px;
+    bottom: -30px;
   }
   
   .why-section__inner {
@@ -282,11 +405,12 @@
   }
   
   .why-section__cards {
-    justify-content: center;
+    grid-template-columns: 1fr;
+    gap: var(--space-xl);
   }
   
   .why-card {
-    width: 100%;
+    margin: 0 auto;
     max-width: 280px;
   }
 }
@@ -312,5 +436,99 @@
     font-size: var(--text-lg);
     line-height: 28px;
     text-align: center;
+  }
+  
+  .why-card__image {
+    width: 150px;
+    height: 150px;
+  }
+  
+  .why-card__title {
+    font-size: var(--text-lg);
+  }
+  
+  .why-card__text {
+    font-size: var(--text-sm);
+  }
+  
+  .hero__wave.waves-2-2-icon {
+    height: 200px;
+    bottom: -20px;
+  }
+  
+  .why-section {
+    margin-top: -20px;
+  }
+}
+
+/* Add intermediate breakpoints for better form layout */
+/* Large tablets and small desktops */
+@media (max-width: 1024px) and (min-width: 769px) {
+  .hero__form {
+    flex-wrap: nowrap;
+    max-width: 100%;
+  }
+  
+  .form__input {
+    min-width: 180px;
+    flex: 1;
+    width: calc(100% - 120px);
+  }
+  
+  .form__btn {
+    min-width: 108px;
+    width: auto;
+    white-space: nowrap;
+    flex: 0 0 auto;
+  }
+}
+
+/* Small tablets */
+@media (max-width: 900px) and (min-width: 769px) {
+  .hero__form {
+    width: 100%;
+    max-width: 100%;
+  }
+}
+
+/* Specific styling for devices just above mobile breakpoint */
+@media (min-width: 769px) and (max-width: 800px) {
+  .hero__form {
+    width: 100%;
+    max-width: 100%;
+  }
+  
+  .form__input {
+    width: 65%;
+    min-width: 65%;
+  }
+  
+  .form__btn {
+    width: 35%;
+    min-width: 35%;
+    padding: 0 var(--space-md);
+  }
+}
+
+/* Browser-specific fixes */
+@supports (-webkit-touch-callout: none) {
+  /* Safari-specific styles */
+  .form__input {
+    /* Fix for Safari rendering issues */
+    -webkit-appearance: none;
+    appearance: none;
+  }
+  
+  .form__btn {
+    /* Fix for Safari button rendering */
+    -webkit-appearance: none;
+    appearance: none;
+  }
+}
+
+/* Fix for Firefox */
+@-moz-document url-prefix() {
+  .hero__form {
+    width: 100%;
   }
 }

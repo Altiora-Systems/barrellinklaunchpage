@@ -39,6 +39,9 @@
   <!-- Preload critical assets -->
   <link rel="preload" href="assets/images/hero-hand-phone_2.png" as="image">
   <link rel="preload" href="css/index.css" as="style">
+  <link rel="preload" href="css/common.css" as="style">
+  <link rel="preload" href="assets/fonts/Futura Md BT Medium.ttf" as="font" type="font/ttf" crossorigin>
+  <link rel="preload" href="assets/fonts/FuturaStd-Bold.otf" as="font" type="font/otf" crossorigin>
   
   <!-- Stylesheets -->
   <link rel="stylesheet" href="css/index.css">
@@ -55,6 +58,17 @@
       <a href="how-it-works.html" class="nav__link">How It Works</a>
       <a href="#signup-form" class="nav__btn">Sign Up</a>
     </nav>
+    <button class="header__menu-toggle" aria-expanded="false" aria-controls="mobile-menu" aria-label="Toggle menu" tabindex="0">
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+    </button>
+    <div class="header__mobile-nav" id="mobile-menu" aria-hidden="true">
+      <nav aria-label="Mobile Navigation">
+        <a href="how-it-works.html" class="mobile-nav__link">How It Works</a>
+        <a href="#signup-form" class="mobile-nav__btn">Sign Up</a>
+      </nav>
+    </div>
   </header>
 
   <main class="hero" role="main">
@@ -74,29 +88,36 @@
               required 
               autocomplete="email"
               pattern="[^@\s]+@[^@\s]+\.[^@\s]+"
+              inputmode="email"
+              enterkeyhint="go"
               aria-describedby="email-error">
             <div id="email-error" class="form__error-message">Please enter a valid email address</div>
           </div>
           <button type="submit" class="form__btn">Sign Up</button>
         </form>
       </div>
-      <img 
-        src="assets/images/hero-hand-phone_2.png" 
-        srcset="assets/images/hero-hand-phone_2.png 745w"
-        sizes="(max-width: 768px) 90vw, (max-width: 1200px) 50vw, 745px"
-        alt="Mobile app preview showing BarrelLink interface" 
-        class="hero__image" 
-        width="745" 
-        height="917" 
-        loading="eager"
-        fetchpriority="high">
+      <div class="hero__image-container">
+        <img 
+          src="assets/images/hero-hand-phone_2.png" 
+          srcset="assets/images/hero-hand-phone_2.png 745w"
+          sizes="(max-width: 768px) 90vw, (max-width: 1200px) 50vw, 745px"
+          alt="Mobile app preview showing BarrelLink interface" 
+          class="hero__image" 
+          width="745" 
+          height="917" 
+          loading="eager"
+          fetchpriority="high">
+      </div>
+    </div> <!-- .hero__wrapper -->
+    
+    <div class="hero__wave-container">
       <img 
         src="assets/illustrations/waves_2.png" 
         alt="" 
         class="hero__wave waves-2-2-icon" 
         aria-hidden="true" 
         loading="lazy">
-    </div> <!-- .hero__wrapper -->
+    </div>
   </main>
 
   <section class="why-section" aria-labelledby="why-section-title">
@@ -107,6 +128,8 @@
         <div class="why-card">
           <img 
             src="assets/images/step1-create.png" 
+            srcset="assets/images/step1-create.png 180w" 
+            sizes="(max-width: 480px) 150px, 180px" 
             alt="" 
             class="why-card__image" 
             width="180" 
@@ -119,6 +142,8 @@
         <div class="why-card">
           <img 
             src="assets/images/step2-choose.png" 
+            srcset="assets/images/step2-choose.png 180w" 
+            sizes="(max-width: 480px) 150px, 180px" 
             alt="" 
             class="why-card__image" 
             width="180" 
@@ -131,6 +156,8 @@
         <div class="why-card">
           <img 
             src="assets/images/step3-schedule.png" 
+            srcset="assets/images/step3-schedule.png 180w" 
+            sizes="(max-width: 480px) 150px, 180px" 
             alt="" 
             class="why-card__image" 
             width="180" 
@@ -143,6 +170,8 @@
         <div class="why-card">
           <img 
             src="assets/images/step4-track.png" 
+            srcset="assets/images/step4-track.png 180w" 
+            sizes="(max-width: 480px) 150px, 180px" 
             alt="" 
             class="why-card__image" 
             width="180" 
