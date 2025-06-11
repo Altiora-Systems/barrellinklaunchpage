@@ -25,7 +25,7 @@ const ASSETS_TO_CACHE = [
   '/assets/images/step2-choose.png',
   '/assets/images/step3-schedule.png',
   '/assets/images/step4-track.png',
-  '/assets/illustrations/waves_2.png',
+  '/assets/illustrations/waves.svg',
   '/assets/icons/faviconBL.ico',
   '/assets/icons/apple-touch-iconBL.png',
   '/assets/icons/faviconBL-32x32.png'
