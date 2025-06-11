@@ -57,42 +57,32 @@
   margin: 0 auto;
 }
 
-/* Brand name styling */
-.brand-name {
-  font-family: var(--font-bold);
-  font-weight: bold;
-  background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-primary) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
 .hero-section__wave {
   position: absolute;
   bottom: -60px;
-  width: 110vw;
+  width: 120vw;
   max-width: none;
   left: 50%;
   transform: translateX(-50%);
   z-index: 1;
-  /* Force wave to extend beyond screen edges */
-  margin-left: calc(-55vw + 50%);
-  margin-right: calc(-55vw + 50%);
-  /* Additional properties to ensure full width */
-  min-width: 110vw;
+  /* Force wave to extend well beyond screen edges */
+  margin-left: calc(-60vw + 50%);
+  margin-right: calc(-60vw + 50%);
+  /* Additional properties to ensure full width overflow */
+  min-width: 120vw;
   box-sizing: content-box;
 }
 
 /* Utility class for wave image - now optimized for SVG */
 .hero-section__wave.waves-2-2-icon {
-  width: 110vw;
+  width: 120vw;
   height: 523px;
   opacity: 0.65;
   object-fit: cover;
-  /* Ensure SVG stretches beyond screen edges */
-  min-width: 110vw;
+  /* Ensure SVG stretches well beyond screen edges */
+  min-width: 120vw;
   display: block;
-  /* Force full viewport width plus overflow */
+  /* Force full viewport width plus significant overflow */
   max-width: none;
   box-sizing: content-box;
 }
@@ -101,8 +91,8 @@
 @media (max-width: var(--breakpoint-xl)) {
   .hero-section__wave.waves-2-2-icon {
     height: 400px;
-    width: 110vw;
-    min-width: 110vw;
+    width: 120vw;
+    min-width: 120vw;
     max-width: none;
     box-sizing: content-box;
   }
@@ -116,8 +106,8 @@
   .hero-section__wave.waves-2-2-icon {
     height: 300px;
     bottom: -30px;
-    width: 110vw;
-    min-width: 110vw;
+    width: 120vw;
+    min-width: 120vw;
     max-width: none;
     box-sizing: content-box;
   }
@@ -135,8 +125,8 @@
   .hero-section__wave.waves-2-2-icon {
     height: 200px;
     bottom: -20px;
-    width: 110vw;
-    min-width: 110vw;
+    width: 120vw;
+    min-width: 120vw;
     max-width: none;
     box-sizing: content-box;
   }
@@ -420,13 +410,13 @@
   
   /* Ensure wave can still extend edge-to-edge regardless of container constraints */
   .hero-section__wave {
-    width: 110vw;
-    min-width: 110vw;
+    width: 120vw;
+    min-width: 120vw;
     max-width: none;
     left: 50%;
     transform: translateX(-50%);
-    margin-left: calc(-55vw + 50%);
-    margin-right: calc(-55vw + 50%);
+    margin-left: calc(-60vw + 50%);
+    margin-right: calc(-60vw + 50%);
     box-sizing: content-box;
   }
 }

@@ -107,6 +107,7 @@ html, body {
   /* Ensure full viewport width is available for edge-to-edge elements */
   width: 100%;
   max-width: none;
+  overflow-x: hidden; /* Hide horizontal scrollbars but allow elements to extend beyond */
 }
 
 body {
@@ -256,12 +257,15 @@ img {
 .brand-name {
   font-family: var(--font-bold);
   font-weight: bold;
-  background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-primary) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  /* Fallback for browsers that don't support background-clip */
-  color: var(--color-accent);
+  /* Remove gradient, use specific colors for Barrel and Link */
+}
+
+.brand-name .barrel {
+  color: #003D7C;
+}
+
+.brand-name .link {
+  color: #FF5A3B;
 }
 
 /* Animation effects */
