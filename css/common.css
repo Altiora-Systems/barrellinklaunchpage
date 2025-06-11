@@ -104,11 +104,16 @@ html, body {
   font-family: var(--font-primary);
   background-color: var(--color-background);
   color: var(--color-text-dark);
+  /* Ensure full viewport width is available for edge-to-edge elements */
+  width: 100%;
+  max-width: none;
+  overflow-x: hidden; /* Hide horizontal scrollbars but allow elements to extend beyond */
 }
 
 body {
-  overflow-x: hidden;
   width: 100%;
+  /* Allow horizontal overflow for edge-to-edge elements like waves but hide scrollbars */
+  overflow-x: hidden;
 }
 
 a { 
@@ -247,6 +252,21 @@ img {
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border: 0;
+}
+
+/* Brand name styling */
+.brand-name {
+  font-family: var(--font-bold);
+  font-weight: bold;
+  /* Remove gradient, use specific colors for Barrel and Link */
+}
+
+.brand-name .barrel {
+  color: #003D7C;
+}
+
+.brand-name .link {
+  color: #FF5A3B;
 }
 
 /* Animation effects */

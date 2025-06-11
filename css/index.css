@@ -10,7 +10,6 @@
   background-color: var(--color-background);
   margin-bottom: 0;
   width: 100%;
-  /* Remove overflow-x to prevent clipping of the wave */
 }
 
 .hero__wrapper {
@@ -22,8 +21,6 @@
   display: flex;
   justify-content: space-between;
   overflow: visible;
-  /* Remove overflow constraints that might affect the wave */
-  overflow-x: visible;
 }
 
 .hero__content {
@@ -67,6 +64,7 @@
   position: relative;
   display: flex;
   margin-top: 0;
+  margin-bottom: var(--space-4xl);
   width: 100%;
   max-width: 544px;
   gap: var(--space-md);
@@ -225,25 +223,86 @@
   }
 }
 
-/* Responsive styles for the wave image */
-@media (max-width: var(--breakpoint-xl)) {
-  .hero__wave.waves-2-2-icon {
-    height: 400px;
-  }
+/* Why BarrelLink Section - Embedded Version */
+.why-section-embedded {
+  margin-top: var(--space-3xl);
+  position: relative;
+  z-index: 2;
 }
 
-@media (max-width: var(--breakpoint-md)) {
-  .hero__wave.waves-2-2-icon {
-    height: 300px;
-    bottom: -30px;
-  }
+.why-section-embedded .why-section__title {
+  font-family: var(--font-bold);
+  font-size: var(--text-4xl);
+  line-height: 40px;
+  font-weight: bold;
+  text-align: left;
+  margin-bottom: var(--space-lg);
+  color: var(--color-text-dark);
 }
 
-@media (max-width: var(--breakpoint-sm)) {
-  .hero__wave.waves-2-2-icon {
-    height: 200px;
-    bottom: -20px;
-  }
+/* Subtitle under the Why section title */
+.why-section-embedded .why-section__subtitle {
+  font-family: var(--font-primary);
+  font-size: var(--text-xl);
+  line-height: 32px;
+  text-align: left;
+  margin-bottom: var(--space-3xl);
+  color: var(--color-text-dark);
+}
+
+/* Modular card layout with CSS Grid */
+.why-section-embedded .why-section__cards {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-2xl);
+  margin-top: var(--space-2xl);
+  width: 100%;
+  transition: grid-template-columns 0.3s ease;
+  grid-auto-rows: 1fr; /* Equal height rows */
+}
+
+.why-section-embedded .why-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  text-align: center;
+  width: 100%;
+  height: 100%;
+  transition: all 0.3s ease;
+}
+
+.why-section-embedded .why-card:hover {
+  transform: translateY(-5px);
+  transition: transform 0.3s ease;
+}
+
+.why-section-embedded .why-card:focus-within {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 4px;
+  border-radius: var(--border-radius-md);
+}
+
+.why-section-embedded .why-card__image {
+  width: 220px;
+  height: 220px;
+  object-fit: contain;
+  margin-bottom: var(--space-lg);
+}
+
+.why-section-embedded .why-card__title {
+  font-family: var(--font-primary);
+  font-size: var(--text-xl);
+  font-weight: bold;
+  color: var(--color-text-dark);
+  margin-bottom: var(--space-sm);
+}
+
+.why-section-embedded .why-card__text {
+  font-family: var(--font-primary);
+  font-size: var(--text-sm);
+  color: var(--color-text-body);
+  line-height: var(--leading-normal);
 }
 
 /* Why BarrelLink Section */
@@ -369,15 +428,17 @@
   
   /* Hero image styles are now controlled by hero__image-container */
   
-  .hero__wave.waves-2-2-icon {
-    height: 400px;
-  }
-  
   .why-section__inner {
     padding: 0 var(--space-2xl);
   }
   
   .why-section__cards {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-xl);
+  }
+  
+  /* Embedded why-section responsive styles */
+  .why-section-embedded .why-section__cards {
     grid-template-columns: repeat(2, 1fr);
     gap: var(--space-xl);
   }
@@ -391,6 +452,12 @@
   
   .why-section__inner {
     padding: 0 var(--space-xl);
+  }
+  
+  /* Embedded why-section responsive styles */
+  .why-section-embedded .why-section__cards {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-xl);
   }
 }
 
@@ -415,6 +482,7 @@
     gap: var(--space-md);
     width: 100%;
     max-width: 100%;
+    margin-bottom: var(--space-2xl);
   }
   
   .form__input {
@@ -437,11 +505,6 @@
   
   /* Hero image styles are now controlled by hero__image-container */
   
-  .hero__wave.waves-2-2-icon {
-    height: 300px;
-    bottom: -30px;
-  }
-  
   .why-section__inner {
     padding: 0 var(--space-lg);
   }
@@ -455,12 +518,27 @@
     margin: 0 auto;
     max-width: 280px;
   }
+  
+  /* Embedded why-section responsive styles */
+  .why-section-embedded .why-section__cards {
+    grid-template-columns: 1fr;
+    gap: var(--space-xl);
+  }
+  
+  .why-section-embedded .why-card {
+    margin: 0 auto;
+    max-width: 280px;
+  }
 }
 
 @media (max-width: var(--breakpoint-sm)) {
   .hero__title {
     font-size: var(--text-4xl);
     line-height: 40px;
+  }
+  
+  .hero__title-break {
+    display: block;
   }
   
   .hero__subtitle {
@@ -480,6 +558,32 @@
     text-align: center;
   }
   
+  /* Embedded why-section responsive styles */
+  .why-section-embedded .why-section__title {
+    font-size: var(--text-2xl);
+    line-height: 34px;
+    text-align: center;
+  }
+  
+  .why-section-embedded .why-section__subtitle {
+    font-size: var(--text-lg);
+    line-height: 28px;
+    text-align: center;
+  }
+  
+  .why-section-embedded .why-card__image {
+    width: 180px;
+    height: 180px;
+  }
+  
+  .why-section-embedded .why-card__title {
+    font-size: var(--text-lg);
+  }
+  
+  .why-section-embedded .why-card__text {
+    font-size: var(--text-sm);
+  }
+  
   .why-card__image {
     width: 150px;
     height: 150px;
@@ -493,13 +597,8 @@
     font-size: var(--text-sm);
   }
   
-  .hero__wave.waves-2-2-icon {
-    height: 200px;
-    bottom: -20px;
-  }
-  
   .why-section {
-    margin-top: -20px;
+    margin-top: 0;
   }
 }
 

@@ -322,6 +322,131 @@ class PerformanceMonitor {
   }
 }
 
+// Scroll Indicator Handler
+class ScrollIndicator {
+  constructor() {
+    this.indicator = document.getElementById('scrollIndicator');
+    this.isVisible = false;
+    this.isAtBottom = false;
+    this.ticking = false;
+    
+    if (this.indicator) {
+      this.init();
+    }
+  }
+
+  init() {
+    this.bindEvents();
+    this.checkScrollPosition();
+  }
+
+  bindEvents() {
+    // Throttled scroll handler
+    this.handleScrollBound = this.throttleScroll.bind(this);
+    window.addEventListener('scroll', this.handleScrollBound, { passive: true });
+    
+    // Click handler
+    this.indicator.addEventListener('click', this.handleClick.bind(this));
+    
+    // Resize handler
+    this.handleResizeBound = () => {
+      this.checkScrollPosition();
+    };
+    window.addEventListener('resize', this.handleResizeBound);
+  }
+
+  throttleScroll() {
+    if (!this.ticking) {
+      requestAnimationFrame(() => {
+        this.checkScrollPosition();
+        this.ticking = false;
+      });
+      this.ticking = true;
+    }
+  }
+
+  checkScrollPosition() {
+    const scrollY = window.scrollY;
+    const windowHeight = window.innerHeight;
+    const documentHeight = document.documentElement.scrollHeight;
+    const scrollThreshold = 200; // Show after scrolling 200px
+    const bottomThreshold = 100; // Consider "at bottom" when 100px from actual bottom
+
+    // Determine if we should show the indicator
+    const shouldShow = scrollY > scrollThreshold;
+    
+    // Determine if we're at the bottom
+    const isAtBottom = (scrollY + windowHeight) >= (documentHeight - bottomThreshold);
+
+    // Update visibility
+    if (shouldShow !== this.isVisible) {
+      this.isVisible = shouldShow;
+      this.updateVisibility();
+    }
+
+    // Update bottom state
+    if (isAtBottom !== this.isAtBottom) {
+      this.isAtBottom = isAtBottom;
+      this.updateBottomState();
+    }
+  }
+
+  updateVisibility() {
+    if (this.isVisible) {
+      this.indicator.classList.add('visible');
+      this.indicator.setAttribute('aria-hidden', 'false');
+    } else {
+      this.indicator.classList.remove('visible');
+      this.indicator.setAttribute('aria-hidden', 'true');
+    }
+  }
+
+  updateBottomState() {
+    if (this.isAtBottom) {
+      this.indicator.classList.add('at-bottom');
+      this.indicator.setAttribute('aria-label', 'Scroll to top');
+    } else {
+      this.indicator.classList.remove('at-bottom');
+      this.indicator.setAttribute('aria-label', 'Scroll to see more');
+    }
+  }
+
+  handleClick() {
+    const scrollOptions = {
+      behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'
+    };
+
+    if (this.isAtBottom) {
+      // Scroll to top
+      window.scrollTo({
+        top: 0,
+        ...scrollOptions
+      });
+    } else {
+      // Scroll to next section (steps section)
+      const stepsSection = document.querySelector('.steps-section');
+      if (stepsSection) {
+        const headerHeight = document.querySelector('.header')?.offsetHeight || 80;
+        const targetPosition = stepsSection.offsetTop - headerHeight;
+        
+        window.scrollTo({
+          top: targetPosition,
+          ...scrollOptions
+        });
+      }
+    }
+  }
+
+  destroy() {
+    if (this.handleScrollBound) {
+      window.removeEventListener('scroll', this.handleScrollBound);
+    }
+    if (this.handleResizeBound) {
+      window.removeEventListener('resize', this.handleResizeBound);
+    }
+  }
+}
+
 /**
  * Main initialization function for How It Works page
  * Initializes all components and tracks page view
@@ -334,6 +459,7 @@ function init() {
     new StepsObserver();
     new PhoneImageLoader();
     new PerformanceMonitor();
+    new ScrollIndicator();
   } catch (error) {
     console.error('Error initializing How It Works components:', error);
   }
@@ -360,7 +486,8 @@ export {
   HowItWorksCarousel,
   PhoneHoverEffects,
   StepsObserver,
-  PhoneImageLoader
+  PhoneImageLoader,
+  ScrollIndicator
 };
 
 // Auto-initialize when DOM is ready

@@ -3,12 +3,13 @@
 
 /* Page-specific styles */
 
-/* Main Content */
+/* Main Content - removed overflow constraint for wave stretching */
 .main {
   position: relative;
   width: 100%;
-  overflow: hidden;
+  max-width: none;
   font-family: var(--font-primary);
+  overflow-x: visible;
 }
 
 .hero-section {
@@ -16,7 +17,6 @@
   background-color: var(--color-background);
   padding: var(--space-4xl) 0 var(--space-4xl);
   text-align: center;
-  overflow-x: hidden;
   width: 100%;
   z-index: 1;
 }
@@ -27,6 +27,16 @@
   padding: 0 var(--space-lg);
   z-index: 2;
   position: relative;
+}
+
+.hero-card {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: var(--border-radius-xl);
+  padding: var(--space-3xl) var(--space-2xl);
+  box-shadow: 0 20px 60px rgba(0, 43, 92, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .hero-section__title {
@@ -40,47 +50,91 @@
 .hero-section__text {
   font-size: var(--text-md);
   line-height: var(--leading-loose);
-  color: var(--color-text-body);
+  color: var(--color-primary);
   max-width: 600px;
   margin: 0 auto;
 }
 
 .hero-section__wave {
   position: absolute;
-  bottom: -60px;
-  width: 100vw;
+  top: -80px; /* Start from header bottom (header height is 80px) */
+  width: 120vw;
   max-width: none;
-  transform: translateX(-50%);
-  left: 50%;
+  left: -10vw; /* Position to ensure equal extension on both sides */
   z-index: 1;
+  /* Remove transforms and margins that might cause asymmetry */
+  min-width: 120vw;
+  box-sizing: border-box;
 }
 
-/* Utility class for PNG wave image */
+/* Utility class for wave image - now optimized for SVG */
 .hero-section__wave.waves-2-2-icon {
-  width: 100%;
-  height: 523px;
+  width: 120vw;
+  height: 600px; /* Increased height to fill more of the hero section */
   opacity: 0.65;
   object-fit: cover;
+  /* Ensure SVG stretches equally beyond screen edges */
+  min-width: 120vw;
+  display: block;
+  /* Force consistent width */
+  max-width: none;
+  box-sizing: border-box;
 }
 
 /* Responsive styles for the wave image */
 @media (max-width: var(--breakpoint-xl)) {
   .hero-section__wave.waves-2-2-icon {
-    height: 400px;
+    height: 500px;
+    width: 120vw;
+    min-width: 120vw;
+    max-width: none;
+    box-sizing: border-box;
+  }
+  
+  .hero-card {
+    padding: var(--space-2xl) var(--space-xl);
   }
 }
 
 @media (max-width: var(--breakpoint-md)) {
   .hero-section__wave.waves-2-2-icon {
-    height: 300px;
-    bottom: -30px;
+    height: 400px;
+    top: -70px; /* Adjust for mobile header height */
+    width: 120vw;
+    min-width: 120vw;
+    max-width: none;
+    box-sizing: border-box;
+  }
+  
+  .hero-card {
+    padding: var(--space-xl) var(--space-lg);
+  }
+  
+  .hero-section__title {
+    font-size: var(--text-5xl);
   }
 }
 
 @media (max-width: var(--breakpoint-sm)) {
   .hero-section__wave.waves-2-2-icon {
-    height: 200px;
-    bottom: -20px;
+    height: 300px;
+    top: -70px;
+    width: 120vw;
+    min-width: 120vw;
+    max-width: none;
+    box-sizing: border-box;
+  }
+  
+  .hero-card {
+    padding: var(--space-lg) var(--space-md);
+  }
+  
+  .hero-section__title {
+    font-size: var(--text-4xl);
+  }
+  
+  .hero-section__text {
+    font-size: var(--text-sm);
   }
 }
 
@@ -336,15 +390,101 @@
   transform: scale(1.05);
 }
 
+/* Scroll Indicator Component */
+.scroll-indicator {
+  position: fixed;
+  bottom: var(--space-2xl);
+  right: var(--space-2xl);
+  width: 56px;
+  height: 56px;
+  background-color: var(--color-accent);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-lg);
+  cursor: pointer;
+  z-index: 100;
+  transition: all var(--transition-medium);
+  opacity: 0;
+  visibility: hidden;
+  transform: scale(0.8);
+}
+
+.scroll-indicator.visible {
+  opacity: 1;
+  visibility: visible;
+  transform: scale(1);
+}
+
+.scroll-indicator:hover {
+  background-color: var(--color-accent-dark);
+  transform: scale(1.1);
+  box-shadow: 0 12px 24px rgba(250, 139, 0, 0.3);
+}
+
+.scroll-indicator__arrow {
+  color: var(--color-text-light);
+  transition: transform var(--transition-medium);
+}
+
+.scroll-indicator.at-bottom .scroll-indicator__arrow {
+  transform: rotate(180deg);
+}
+
+.scroll-indicator:active {
+  transform: scale(0.95);
+}
+
+/* Mobile adjustments */
+@media (max-width: var(--breakpoint-md)) {
+  .scroll-indicator {
+    width: 48px;
+    height: 48px;
+    bottom: var(--space-lg);
+    right: var(--space-lg);
+  }
+  
+  .scroll-indicator__arrow {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+@media (max-width: var(--breakpoint-sm)) {
+  .scroll-indicator {
+    width: 44px;
+    height: 44px;
+    bottom: var(--space-md);
+    right: var(--space-md);
+  }
+  
+  .scroll-indicator__arrow {
+    width: 18px;
+    height: 18px;
+  }
+}
+
 /* Media queries for responsiveness */
 @media (max-width: var(--breakpoint-2xl)) {
   .main, .hero-section, .steps-section {
     width: 100%;
+    max-width: none;
   }
 
   .steps-container {
     width: 90%;
     max-width: var(--breakpoint-xl);
+  }
+  
+  /* Ensure wave can still extend edge-to-edge regardless of container constraints */
+  .hero-section__wave {
+    width: 120vw;
+    min-width: 120vw;
+    max-width: none;
+    left: -10vw;
+    top: -80px;
+    box-sizing: border-box;
   }
 }
 
