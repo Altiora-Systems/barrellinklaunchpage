@@ -3,70 +3,180 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>BarrelLink - Launch Page</title>
+  <title>BarrelLink - A Caribbean Diaspora Shipping Marketplace</title>
+  
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="BarrelLink is a marketplace purpose built for the Caribbean Diaspora to ship your items home. Join our waitlist today!">
+  <meta name="keywords" content="BarrelLink, Caribbean, Diaspora, shipping, barrel shipping, marketplace">
+  <meta name="author" content="BarrelLink">
+  <meta name="robots" content="index, follow">
+  
+  <!-- Open Graph / Facebook Meta Tags -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://barrellink.com/">
+  <meta property="og:title" content="BarrelLink - A Caribbean Diaspora Shipping Marketplace">
+  <meta property="og:description" content="A marketplace purpose built for the Caribbean Diaspora to ship your items home.">
+  <meta property="og:image" content="https://barrellink.com/assets/images/Barrel Link_Tagline.png">
+  
+  <!-- Twitter Meta Tags -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="BarrelLink - A Caribbean Diaspora Shipping Marketplace">
+  <meta name="twitter:description" content="A marketplace purpose built for the Caribbean Diaspora to ship your items home.">
+  <meta name="twitter:image" content="https://barrellink.com/assets/images/Barrel Link_Tagline.png">
+  
+  <!-- Favicon and App Icons -->
+  <link rel="icon" href="assets/icons/faviconBL.ico" type="image/x-icon">
+  <link rel="apple-touch-icon" href="assets/icons/apple-touch-iconBL.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/faviconBL-32x32.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="msapplication-config" content="/browserconfig.xml">
+  <meta name="theme-color" content="#002b5c">
+  
+  <!-- Preconnect to improve font loading performance -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  
+  <!-- Preload critical assets -->
+  <link rel="preload" href="assets/images/hero-hand-phone_2.png" as="image">
+  <link rel="preload" href="css/index.css" as="style">
+  
+  <!-- Stylesheets -->
   <link rel="stylesheet" href="css/index.css">
+  
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://barrellink.com/">
 </head>
 <body>
-  <header class="header">
-    <a href="/">
-      <img src="assets/images/Barrel Link_Tagline.png" alt="BarrelLink Logo" class="header__logo">
+  <header class="header" role="banner">
+    <a href="/" aria-label="BarrelLink Home">
+      <img src="assets/images/Barrel Link_Tagline.png" alt="BarrelLink Logo" class="header__logo" width="200" height="38">
     </a>
-    <nav class="header__nav">
+    <nav class="header__nav" role="navigation" aria-label="Main Navigation">
       <a href="how-it-works.html" class="nav__link">How It Works</a>
-      <a href="#" class="nav__btn">Sign Up</a>
+      <a href="#signup-form" class="nav__btn">Sign Up</a>
     </nav>
   </header>
 
-  <main class="hero">
-    <div class="hero__content">
-      <h1 class="hero__title">Coming Soon</h1>
-      <p class="hero__subtitle">One Platform. Every Connection.<br>All the Way Home.</p>
-      <form class="hero__form" id="signup-form">
-        <input type="email" class="form__input" placeholder="Enter your email address" required aria-label="Email address">
-        <button type="submit" class="form__btn" aria-label="Sign up">Sign Up</button>
-      </form>
-    </div>
-    <img src="assets/images/hero-hand-phone_2.png" alt="App Preview" class="hero__image">
-    <p class="hero__tagline">Friendly. Transparent. Trusted</p>
-    <img src="assets/illustrations/waves.svg" alt="Decorative Wave" class="hero__wave">
+  <main class="hero" role="main">
+    <div class="hero__wrapper">
+      <div class="hero__content">
+        <h1 class="hero__title">Coming Soon</h1>
+        <p class="hero__subtitle">A marketplace purpose built for the Caribbean Diaspora to ship your items home.</p>
+        <form class="hero__form" id="homepage-signup" aria-labelledby="signup-heading" novalidate>
+          <h2 id="signup-heading" class="visually-hidden">Join Our Waitlist</h2>
+          <div class="form__group">
+            <label for="email-input" class="visually-hidden">Email Address</label>
+            <input 
+              type="email" 
+              id="email-input" 
+              class="form__input" 
+              placeholder="Enter your email address" 
+              required 
+              autocomplete="email"
+              pattern="[^@\s]+@[^@\s]+\.[^@\s]+"
+              aria-describedby="email-error">
+            <div id="email-error" class="form__error-message">Please enter a valid email address</div>
+          </div>
+          <button type="submit" class="form__btn">Sign Up</button>
+        </form>
+      </div>
+      <img 
+        src="assets/images/hero-hand-phone_2.png" 
+        srcset="assets/images/hero-hand-phone_2.png 745w"
+        sizes="(max-width: 768px) 90vw, (max-width: 1200px) 50vw, 745px"
+        alt="Mobile app preview showing BarrelLink interface" 
+        class="hero__image" 
+        width="745" 
+        height="917" 
+        loading="eager"
+        fetchpriority="high">
+      <img 
+        src="assets/illustrations/waves_2.png" 
+        alt="" 
+        class="hero__wave waves-2-2-icon" 
+        aria-hidden="true" 
+        loading="lazy">
+    </div> <!-- .hero__wrapper -->
   </main>
 
-  <section class="why-section">
+  <section class="why-section" aria-labelledby="why-section-title">
     <div class="why-section__inner">
-      <h2 class="why-section__title">Why BarrelLink?</h2>
+      <h2 id="why-section-title" class="why-section__title">Why BarrelLink?</h2>
+      <p class="why-section__subtitle">Friendly. Transparent. Trusted</p>
       <div class="why-section__cards">
         <div class="why-card">
-          <img src="assets/images/step1-create.png" alt="Create Account" class="why-card__image">
+          <img 
+            src="assets/images/step1-create.png" 
+            alt="" 
+            class="why-card__image" 
+            width="180" 
+            height="180" 
+            loading="lazy" 
+            aria-hidden="true">
           <h3 class="why-card__title">Create</h3>
           <p class="why-card__text">Quick setup to start your journey</p>
         </div>
         <div class="why-card">
-          <img src="assets/images/step2-choose.png" alt="Choose Provider" class="why-card__image">
+          <img 
+            src="assets/images/step2-choose.png" 
+            alt="" 
+            class="why-card__image" 
+            width="180" 
+            height="180" 
+            loading="lazy" 
+            aria-hidden="true">
           <h3 class="why-card__title">Choose</h3>
           <p class="why-card__text">Select from verified providers</p>
         </div>
         <div class="why-card">
-          <img src="assets/images/step3-schedule.png" alt="Schedule" class="why-card__image">
+          <img 
+            src="assets/images/step3-schedule.png" 
+            alt="" 
+            class="why-card__image" 
+            width="180" 
+            height="180" 
+            loading="lazy" 
+            aria-hidden="true">
           <h3 class="why-card__title">Schedule</h3>
           <p class="why-card__text">Book services at your convenience</p>
         </div>
         <div class="why-card">
-          <img src="assets/images/step4-track.png" alt="Track Progress" class="why-card__image">
+          <img 
+            src="assets/images/step4-track.png" 
+            alt="" 
+            class="why-card__image" 
+            width="180" 
+            height="180" 
+            loading="lazy" 
+            aria-hidden="true">
           <h3 class="why-card__title">Track</h3>
           <p class="why-card__text">Monitor your service in real-time</p>
         </div>
       </div>
     </div>
   </section>
-
-  <footer class="footer">
-    <div class="footer__inner">
-      <img src="assets/images/Barrel Link_No Tagline.png" alt="BarrelLink Logo" class="footer__logo">
-      <p class="footer__copyright">&copy; 2025 BarrelLink. All rights reserved.</p>
-    </div>
-  </footer>
-
-  <script src="js/core.js"></script>
+  
   <div id="toast" role="alert" aria-live="assertive" class="toast"></div>
+  
+  <!-- Schema.org structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "BarrelLink",
+    "url": "https://barrellink.com",
+    "logo": "https://barrellink.com/assets/images/Barrel Link_Tagline.png",
+    "description": "A marketplace purpose built for the Caribbean Diaspora to ship your items home.",
+    "sameAs": [
+      "https://twitter.com/barrellink",
+      "https://facebook.com/barrellink",
+      "https://instagram.com/barrellink"
+    ]
+  }
+  </script>
+  
+  <!-- JavaScript -->
+  <script src="js/core.js" type="module"></script>
+  <script src="js/landing.js" type="module"></script>
 </body>
 </html>

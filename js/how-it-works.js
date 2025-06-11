@@ -2,18 +2,7 @@
    HOW IT WORKS PAGE FUNCTIONALITY
    =========================== */
 
-// Debounce utility for performance
-function debounce(func, wait) {
-  let timeout;
-  return function executedFunction(...args) {
-    const later = () => {
-      clearTimeout(timeout);
-      func(...args);
-    };
-    clearTimeout(timeout);
-    timeout = setTimeout(later, wait);
-  };
-}
+// Use debounce from core.js
 
 // How It Works Carousel Handler
 class HowItWorksCarousel {
@@ -54,24 +43,38 @@ class HowItWorksCarousel {
   }
 
   bindEvents() {
-    // Scroll event for updating current slide
-    const debouncedScroll = debounce(() => this.handleScroll(), 100);
+    // Create locally bound methods for event listeners
+    this.handleScrollBound = this.handleScroll.bind(this);
+    this.handleKeyboardBound = this.handleKeyboard.bind(this);
+    this.handleResizeBound = this.handleResize.bind(this);
+    
+    // Scroll event for updating current slide with debouncing
+    const debounce = window.debounce || ((fn, delay) => {
+      let timeout;
+      return function(...args) {
+        clearTimeout(timeout);
+        timeout = setTimeout(() => fn.apply(this, args), delay);
+      };
+    });
+    
+    const debouncedScroll = debounce(this.handleScrollBound, 100);
     this.track.addEventListener('scroll', debouncedScroll, { passive: true });
 
     // Navigation buttons (hidden on touch devices)
     if (!this.isTouch) {
-      this.prevBtn?.addEventListener('click', () => this.goToPrevious());
-      this.nextBtn?.addEventListener('click', () => this.goToNext());
+      if (this.prevBtn) this.prevBtn.addEventListener('click', () => this.goToPrevious());
+      if (this.nextBtn) this.nextBtn.addEventListener('click', () => this.goToNext());
     }
 
     // Keyboard navigation
-    this.track.addEventListener('keydown', (e) => this.handleKeyboard(e));
+    this.track.addEventListener('keydown', this.handleKeyboardBound);
 
     // Touch/drag events for better mobile experience
     this.setupTouchEvents();
 
-    // Window resize handler
-    window.addEventListener('resize', debounce(() => this.handleResize(), 250));
+    // Window resize handler with debouncing
+    const debouncedResize = debounce(this.handleResizeBound, 250);
+    window.addEventListener('resize', debouncedResize);
   }
 
   setupTouchEvents() {
@@ -178,8 +181,19 @@ class HowItWorksCarousel {
 
   cleanup() {
     // Clean up event listeners if switching to desktop view
-    this.track.removeEventListener('scroll', this.handleScroll);
-    this.track.removeEventListener('keydown', this.handleKeyboard);
+    if (this.track) {
+      // Use the bound methods we created in bindEvents for proper cleanup
+      this.track.removeEventListener('scroll', this.handleScrollBound);
+      this.track.removeEventListener('keydown', this.handleKeyboardBound);
+    }
+    
+    window.removeEventListener('resize', this.handleResizeBound);
+    
+    // Remove button event listeners if they exist
+    if (!this.isTouch) {
+      if (this.prevBtn) this.prevBtn.onclick = null;
+      if (this.nextBtn) this.nextBtn.onclick = null;
+    }
   }
 }
 
@@ -308,14 +322,26 @@ class PerformanceMonitor {
   }
 }
 
-// Main initialization function
+/**
+ * Main initialization function for How It Works page
+ * Initializes all components and tracks page view
+ */
 function init() {
   // Initialize all components
-  new HowItWorksCarousel();
-  new PhoneHoverEffects();
-  new StepsObserver();
-  new PhoneImageLoader();
-  new PerformanceMonitor();
+  try {
+    new HowItWorksCarousel();
+    new PhoneHoverEffects();
+    new StepsObserver();
+    new PhoneImageLoader();
+    new PerformanceMonitor();
+  } catch (error) {
+    console.error('Error initializing How It Works components:', error);
+  }
+  
+  // Make sure core features are initialized
+  if (typeof window.initCore === 'function') {
+    window.initCore();
+  }
   
   // Track page view for analytics
   if (typeof gtag !== 'undefined') {
@@ -329,7 +355,13 @@ function init() {
 }
 
 // Export for use in other modules
-export { init, HowItWorksCarousel };
+export { 
+  init, 
+  HowItWorksCarousel,
+  PhoneHoverEffects,
+  StepsObserver,
+  PhoneImageLoader
+};
 
 // Auto-initialize when DOM is ready
 if (document.readyState === 'loading') {

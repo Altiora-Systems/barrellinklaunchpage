@@ -3,70 +3,120 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>BarrelLink - How It Works</title>
-  <link rel="stylesheet" href="css/how-it-works.css">
+  <title>How BarrelLink Works | Caribbean Diaspora Shipping Marketplace</title>
+  
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="Learn how BarrelLink works - the marketplace purpose built for the Caribbean Diaspora to ship your items home. Create an account, choose a provider, schedule services, and track shipments.">
+  <meta name="keywords" content="BarrelLink, how it works, Caribbean, Diaspora, shipping, barrel shipping, marketplace">
+  <meta name="author" content="BarrelLink">
+  <meta name="robots" content="index, follow">
+  
+  <!-- Open Graph / Facebook Meta Tags -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://barrellink.com/how-it-works.html">
+  <meta property="og:title" content="How BarrelLink Works | Caribbean Diaspora Shipping Marketplace">
+  <meta property="og:description" content="Learn how BarrelLink works - Create an account, choose a provider, schedule services, and track shipments.">
+  <meta property="og:image" content="https://barrellink.com/assets/images/Barrel Link_Tagline.png">
+  
+  <!-- Twitter Meta Tags -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="How BarrelLink Works | Caribbean Diaspora Shipping Marketplace">
+  <meta name="twitter:description" content="Learn how BarrelLink works - Create an account, choose a provider, schedule services, and track shipments.">
+  <meta name="twitter:image" content="https://barrellink.com/assets/images/Barrel Link_Tagline.png">
+  
+  <!-- Favicon and App Icons -->
   <link rel="icon" href="assets/icons/faviconBL.ico" type="image/x-icon">
   <link rel="apple-touch-icon" href="assets/icons/apple-touch-iconBL.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/faviconBL-32x32.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="msapplication-config" content="/browserconfig.xml">
+  <meta name="theme-color" content="#002b5c">
+  
+  <!-- Preconnect to improve font loading performance -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  
+  <!-- Preload critical assets -->
+  <link rel="preload" href="assets/images/step1-create.png" as="image">
+  <link rel="preload" href="css/how-it-works.css" as="style">
+  
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/how-it-works.css">
+  
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://barrellink.com/how-it-works.html">
 </head>
 <body>
-  <header class="header">
-    <a href="/">
-      <img src="assets/images/Barrel Link_Tagline.png" alt="BarrelLink Logo" class="header__logo">
+  <header class="header" role="banner">
+    <a href="/" aria-label="BarrelLink Home">
+      <img src="assets/images/Barrel Link_Tagline.png" alt="BarrelLink Logo" class="header__logo" width="200" height="38">
     </a>
-    <nav class="header__nav">
+    <nav class="header__nav" role="navigation" aria-label="Main Navigation">
       <a href="/" class="nav__link">Home</a>
-      <a href="#" class="nav__btn">Sign Up</a>
+      <a href="#hiw-signup-form" class="nav__btn">Sign Up</a>
     </nav>
   </header>
 
-  <main>
-    <section class="hero-section">
+  <main role="main">
+    <section class="hero-section" aria-labelledby="hero-title">
       <div class="hero-section__content">
-        <h1 class="hero-section__title">How It Works</h1>
-        <p class="hero-section__text">At BarrelLink, we're transforming the way homeowners and service providers connect. Our platform streamlines the entire process, making it easier than ever to find, schedule, and manage home services.</p>
+        <h1 id="hero-title" class="hero-section__title">How It Works</h1>
+        <p class="hero-section__text">At BarrelLink, we're transforming the way the Caribbean Diaspora ships items home. Our platform streamlines the entire process, making it easier than ever to find, schedule, and track your shipments.</p>
       </div>
-      <img src="assets/illustrations/waves.svg" alt="Decorative Wave" class="hero-section__wave">
+      <img src="assets/illustrations/waves.svg" alt="" class="hero-section__wave" aria-hidden="true" loading="lazy">
     </section>
 
     <section class="steps-section">
       <div class="steps-container">
-        <div class="step" id="step-1">
+        <article class="step" id="step-1" aria-labelledby="step1-title">
           <div class="step__content">
-            <div class="step__number">1</div>
-            <h2 class="step__title">Create Your Account</h2>
-            <p class="step__text">Sign up in minutes and tell us about your home and service needs. Our simple onboarding process helps us understand what matters most to you.</p>
+            <div class="step__number" aria-hidden="true">1</div>
+            <h2 id="step1-title" class="step__title">Create Your Account</h2>
+            <p class="step__text">Sign up in minutes and tell us about your shipping needs. Our simple onboarding process helps us understand what matters most to you.</p>
             <ul class="step__features">
               <li>Quick profile setup</li>
               <li>Secure account management</li>
-              <li>Personalized service recommendations</li>
+              <li>Personalized shipping recommendations</li>
             </ul>
           </div>
           <div class="step__image-container">
-            <img src="assets/images/step1-create.png" alt="Create Your Account" class="step__image">
+            <img 
+              src="assets/images/step1-create.png" 
+              alt="Phone screen showing account creation process" 
+              class="step__image" 
+              width="300" 
+              height="600" 
+              loading="lazy">
           </div>
-        </div>
+        </article>
 
-        <div class="step" id="step-2">
+        <article class="step" id="step-2" aria-labelledby="step2-title">
           <div class="step__content">
-            <div class="step__number">2</div>
-            <h2 class="step__title">Choose Your Provider</h2>
-            <p class="step__text">Browse our network of vetted, qualified service providers. Compare ratings, reviews, and pricing to find the perfect match for your needs.</p>
+            <div class="step__number" aria-hidden="true">2</div>
+            <h2 id="step2-title" class="step__title">Choose Your Provider</h2>
+            <p class="step__text">Browse our network of vetted, qualified shipping providers. Compare ratings, reviews, and pricing to find the perfect match for your needs.</p>
             <ul class="step__features">
-              <li>Verified professional profiles</li>
+              <li>Verified provider profiles</li>
               <li>Transparent pricing</li>
               <li>Real customer reviews</li>
             </ul>
           </div>
           <div class="step__image-container">
-            <img src="assets/images/step2-choose.png" alt="Choose Your Provider" class="step__image">
+            <img 
+              src="assets/images/step2-choose.png" 
+              alt="Phone screen showing provider selection interface" 
+              class="step__image" 
+              width="300" 
+              height="600" 
+              loading="lazy">
           </div>
-        </div>
+        </article>
 
-        <div class="step" id="step-3">
+        <article class="step" id="step-3" aria-labelledby="step3-title">
           <div class="step__content">
-            <div class="step__number">3</div>
-            <h2 class="step__title">Schedule Service</h2>
-            <p class="step__text">Book appointments with ease using our intuitive scheduling system. Select your preferred time slots and receive instant confirmation.</p>
+            <div class="step__number" aria-hidden="true">3</div>
+            <h2 id="step3-title" class="step__title">Schedule Service</h2>
+            <p class="step__text">Book shipments with ease using our intuitive scheduling system. Select your preferred pickup and delivery times and receive instant confirmation.</p>
             <ul class="step__features">
               <li>Real-time availability</li>
               <li>Flexible scheduling options</li>
@@ -74,15 +124,21 @@
             </ul>
           </div>
           <div class="step__image-container">
-            <img src="assets/images/step3-schedule.png" alt="Schedule Service" class="step__image">
+            <img 
+              src="assets/images/step3-schedule.png" 
+              alt="Phone screen showing scheduling calendar interface" 
+              class="step__image" 
+              width="300" 
+              height="600" 
+              loading="lazy">
           </div>
-        </div>
+        </article>
 
-        <div class="step" id="step-4">
+        <article class="step" id="step-4" aria-labelledby="step4-title">
           <div class="step__content">
-            <div class="step__number">4</div>
-            <h2 class="step__title">Track Your Service</h2>
-            <p class="step__text">Stay informed every step of the way. Track your service provider's arrival, monitor progress, and provide feedback once the job is complete.</p>
+            <div class="step__number" aria-hidden="true">4</div>
+            <h2 id="step4-title" class="step__title">Track Your Shipment</h2>
+            <p class="step__text">Stay informed every step of the way. Track your shipment's progress in real-time, receive notifications, and provide feedback once your items are delivered.</p>
             <ul class="step__features">
               <li>Real-time status updates</li>
               <li>Secure in-app messaging</li>
@@ -90,9 +146,15 @@
             </ul>
           </div>
           <div class="step__image-container">
-            <img src="assets/images/step4-track.png" alt="Track Your Service" class="step__image">
+            <img 
+              src="assets/images/step4-track.png" 
+              alt="Phone screen showing package tracking interface" 
+              class="step__image" 
+              width="300" 
+              height="600" 
+              loading="lazy">
           </div>
-        </div>
+        </article>
       </div>
 
       <div class="carousel" id="stepsCarousel">
@@ -129,28 +191,75 @@
       </div>
     </section>
 
-    <section class="cta-section">
+    <section class="cta-section" aria-labelledby="cta-title">
       <div class="cta-section__content">
-        <h2 class="cta-section__title">Ready to Experience the Future of Home Services?</h2>
+        <h2 id="cta-title" class="cta-section__title">Ready to Experience the Future of Caribbean Shipping?</h2>
         <p class="cta-section__text">Join our waitlist today and be the first to know when BarrelLink launches in your area.</p>
-        <form class="cta-form" id="signup-form">
-          <input type="email" class="cta-form__input" placeholder="Enter your email address" required aria-label="Email address">
-          <button type="submit" class="cta-form__btn" aria-label="Sign up">Join Waitlist</button>
+        <form class="cta-form" id="hiw-signup-form" aria-labelledby="cta-title" novalidate>
+          <div class="form__group">
+            <label for="hiw-email-input" class="visually-hidden">Email Address</label>
+            <input 
+              type="email" 
+              id="hiw-email-input" 
+              class="cta-form__input" 
+              placeholder="Enter your email address" 
+              required 
+              autocomplete="email"
+              pattern="[^@\s]+@[^@\s]+\.[^@\s]+"
+              aria-describedby="hiw-email-error">
+            <div id="hiw-email-error" class="form__error-message">Please enter a valid email address</div>
+          </div>
+          <button type="submit" class="cta-form__btn">Join Waitlist</button>
         </form>
       </div>
     </section>
   </main>
 
-  <footer class="footer">
-    <div class="footer__inner">
-      <img src="assets/images/Barrel Link_No Tagline.png" alt="BarrelLink Logo" class="footer__logo">
-      <p class="footer__copyright">&copy; 2025 BarrelLink. All rights reserved.</p>
-    </div>
-  </footer>
-
   <div id="toast" role="alert" aria-live="assertive" class="toast"></div>
   
-  <script src="js/core.js"></script>
-  <script src="js/how-it-works.js"></script>
+  <!-- Schema.org structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "How BarrelLink Works",
+    "description": "Learn how BarrelLink works - Create an account, choose a provider, schedule services, and track shipments.",
+    "publisher": {
+      "@type": "Organization",
+      "name": "BarrelLink",
+      "logo": "https://barrellink.com/assets/images/Barrel Link_Tagline.png"
+    },
+    "mainEntity": {
+      "@type": "HowTo",
+      "name": "How to Use BarrelLink",
+      "step": [
+        {
+          "@type": "HowToStep",
+          "name": "Create Your Account",
+          "text": "Sign up in minutes and tell us about your shipping needs."
+        },
+        {
+          "@type": "HowToStep",
+          "name": "Choose Your Provider",
+          "text": "Browse our network of vetted, qualified service providers."
+        },
+        {
+          "@type": "HowToStep",
+          "name": "Schedule Service",
+          "text": "Book shipments with ease using our intuitive scheduling system."
+        },
+        {
+          "@type": "HowToStep",
+          "name": "Track Your Service",
+          "text": "Stay informed every step of the way with our tracking system."
+        }
+      ]
+    }
+  }
+  </script>
+  
+  <!-- JavaScript -->
+  <script src="js/core.js" type="module"></script>
+  <script src="js/how-it-works.js" type="module"></script>
 </body>
 </html>

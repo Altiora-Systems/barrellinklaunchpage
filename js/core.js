@@ -2,19 +2,56 @@
    CORE UTILITIES
    =========================== */
 
-// Service Worker Registration
+/**
+ * This file contains shared functionality across the website:
+ * - Service Worker registration for offline capabilities
+ * - Smooth scrolling implementation
+ * - Mobile menu functionality
+ * - Toast notification system
+ * - Animation utilities
+ * - Shared helper functions (debounce, email validation)
+ *
+ * All utilities are either attached to the window object or
+ * initialized in the DOMContentLoaded event.
+ */
+
+/**
+ * Service Worker Registration
+ * Enables offline capabilities and caching for the website
+ */
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', async () => {
     try {
       const registration = await navigator.serviceWorker.register('/sw.js');
-      console.log('ServiceWorker registration successful');
+      console.log('ServiceWorker registration successful with scope:', registration.scope);
+      
+      // Handle updates
+      registration.addEventListener('updatefound', () => {
+        const newWorker = registration.installing;
+        
+        newWorker.addEventListener('statechange', () => {
+          if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+            // New content is available, inform user if needed
+            console.log('New content is available; please refresh the page.');
+          }
+        });
+      });
     } catch (error) {
-      console.log('ServiceWorker registration failed');
+      console.error('ServiceWorker registration failed:', error);
+      // Don't let service worker errors break the site
     }
   });
 }
 
-// Smooth Scroll Utility
+/**
+ * Smooth Scroll Utility
+ * Scrolls the page to a target element with smooth animation
+ * Respects user's motion preferences
+ * 
+ * @param {HTMLElement|string} target - The element or selector to scroll to
+ * @param {number} duration - Animation duration in milliseconds
+ * @returns {void}
+ */
 function smoothScrollTo(target, duration = 800) {
   const targetElement = typeof target === 'string' ? document.querySelector(target) : target;
   if (!targetElement) return;
@@ -24,6 +61,10 @@ function smoothScrollTo(target, duration = 800) {
   const distance = targetPosition - startPosition;
   let startTime = null;
 
+  /**
+   * Animation frame callback
+   * @param {number} currentTime - Current timestamp
+   */
   function animation(currentTime) {
     if (startTime === null) startTime = currentTime;
     const timeElapsed = currentTime - startTime;
@@ -32,6 +73,14 @@ function smoothScrollTo(target, duration = 800) {
     if (timeElapsed < duration) requestAnimationFrame(animation);
   }
 
+  /**
+   * Easing function for smooth animation
+   * @param {number} t - Current time
+   * @param {number} b - Start position
+   * @param {number} c - Change in position
+   * @param {number} d - Duration
+   * @returns {number} - Next position
+   */
   function ease(t, b, c, d) {
     t /= d / 2;
     if (t < 1) return c / 2 * t * t + b;
@@ -177,62 +226,61 @@ class FadeInObserver {
   }
 }
 
-// Parallax Effect for Hero Waves
-class ParallaxEffect {
-  constructor() {
-    this.hero = document.querySelector('.hero');
-    this.reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+// [Removed Parallax Effect for Hero Waves]
+
+/**
+ * Debounce utility function
+ * Limits how often a function can be called
+ * Useful for scroll, resize and input events
+ * 
+ * @param {Function} func - The function to debounce
+ * @param {number} wait - Time to wait in milliseconds
+ * @returns {Function} - Debounced function
+ */
+function debounce(func, wait) {
+  let timeout;
+  
+  return function executedFunction(...args) {
+    // Store the context and args for the pending function call
+    const context = this;
     
-    if (!this.reduceMotion && this.hero) {
-      this.init();
-    }
-  }
-
-  init() {
-    let ticking = false;
-
-    const updateParallax = () => {
-      const scrolled = window.pageYOffset;
-      const parallax = scrolled * 0.5;
-      
-      if (this.hero) {
-        const waves = this.hero.querySelector('::before');
-        if (waves) {
-          this.hero.style.setProperty('--parallax-offset', `${parallax}px`);
-        }
-      }
-      
-      ticking = false;
+    const later = () => {
+      clearTimeout(timeout);
+      func.apply(context, args);
     };
-
-    const requestTick = () => {
-      if (!ticking) {
-        requestAnimationFrame(updateParallax);
-        ticking = true;
-      }
-    };
-
-    window.addEventListener('scroll', requestTick, { passive: true });
-  }
+    
+    // Reset the timer
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+  };
 }
 
-// Email Validation Utility
+/**
+ * Email Validation Utility
+ * Validates email format using regex
+ * 
+ * @param {string} email - The email to validate
+ * @returns {boolean} - Whether the email is valid
+ */
 function validateEmail(email) {
+  if (!email || typeof email !== 'string') return false;
+  
+  // Regex to validate email format
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return emailRegex.test(email);
 }
 
-// Initialize Core Features
-document.addEventListener('DOMContentLoaded', () => {
+/**
+ * Initialize core features and functionality
+ * Used both internally and can be called by other modules
+ */
+function initCore() {
   // Initialize mobile menu
   new MobileMenu();
   
   // Initialize fade-in animations
   new FadeInObserver();
-  
-  // Initialize parallax effect
-  new ParallaxEffect();
-  
+
   // Initialize smooth scroll for anchor links
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
@@ -246,19 +294,46 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Header shadow on scroll
   const header = document.querySelector('.header');
-  window.addEventListener('scroll', () => {
+  
+  // Use debounce for scroll events for better performance
+  const handleScroll = debounce(() => {
     if (window.scrollY > 20) {
-      header.classList.add('scrolled');
+      header?.classList.add('scrolled');
     } else {
-      header.classList.remove('scrolled');
+      header?.classList.remove('scrolled');
     }
-  });
+  }, 50);
+  
+  window.addEventListener('scroll', handleScroll);
 
   // Apply fade-in to hero content elements
-  document.querySelectorAll('.hero__content, .hero__tagline, .hero__image').forEach(el => el.classList.add('fade-in'));
-});
+  document.querySelectorAll('.hero__content, .hero__subtitle, .hero__image').forEach(el => el.classList.add('fade-in'));
+  
+  console.log('Core features initialized');
+}
+
+// Initialize Core Features when DOM is ready
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initCore);
+} else {
+  initCore();
+}
+
+// Export the init function for use in other modules
+window.initCore = initCore;
 
 // Export utilities for use in other modules
 window.Toast = Toast;
 window.validateEmail = validateEmail;
 window.smoothScrollTo = smoothScrollTo;
+window.debounce = debounce;
+
+// Proper ES module exports
+export {
+  Toast,
+  validateEmail,
+  smoothScrollTo,
+  debounce,
+  MobileMenu,
+  FadeInObserver
+};
