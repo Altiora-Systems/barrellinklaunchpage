@@ -6,7 +6,7 @@
 /* Hero Section */
 .hero {
   position: relative;
-  min-height: 700px;
+  min-height: 640px;
   background-color: var(--color-background);
   margin-bottom: 0;
   width: 100%;
@@ -227,7 +227,7 @@
 .why-section-embedded {
   margin-top: var(--space-3xl);
   position: relative;
-  z-index: 2;
+  z-index: 30;
 }
 
 .why-section-embedded .why-section__title {
@@ -250,48 +250,45 @@
   color: var(--color-text-dark);
 }
 
-/* Modular card layout with CSS Grid */
 .why-section-embedded .why-section__cards {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: var(--space-2xl);
-  margin-top: var(--space-2xl);
-  width: 100%;
-  transition: grid-template-columns 0.3s ease;
-  grid-auto-rows: 1fr; /* Equal height rows */
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: var(--space-3xl);
 }
 
 .why-section-embedded .why-card {
+  flex-basis: calc(25% - var(--space-3xl) * 3 / 4); /* For 4 cards */
+  min-width: 250px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
   text-align: center;
-  width: 100%;
-  height: 100%;
-  transition: all 0.3s ease;
+  padding: var(--space-xl);
+  background-color: #fff;
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--transition-fast);
 }
 
 .why-section-embedded .why-card:hover {
   transform: translateY(-5px);
-  transition: transform 0.3s ease;
 }
 
 .why-section-embedded .why-card:focus-within {
   outline: 2px solid var(--color-accent);
-  outline-offset: 4px;
-  border-radius: var(--border-radius-md);
+  outline-offset: 2px;
 }
 
 .why-section-embedded .why-card__image {
-  width: 220px;
-  height: 220px;
+  width: 180px;
+  height: 180px;
   object-fit: contain;
-  margin-bottom: var(--space-lg);
+  margin-bottom: var(--space-md);
 }
 
 .why-section-embedded .why-card__title {
-  font-family: var(--font-primary);
+  font-family: var(--font-bold);
   font-size: var(--text-xl);
   font-weight: bold;
   color: var(--color-text-dark);
@@ -299,97 +296,82 @@
 }
 
 .why-section-embedded .why-card__text {
-  font-family: var(--font-primary);
   font-size: var(--text-sm);
-  color: var(--color-text-body);
   line-height: var(--leading-normal);
+  color: var(--color-text-body);
 }
 
-/* Why BarrelLink Section */
+/* Main Why BarrelLink Section */
 .why-section {
   background-color: var(--color-background);
-  padding: var(--space-5xl) 0 var(--space-4xl);
+  padding: var(--space-5xl) 0;
   position: relative;
-  z-index: 30;
-  margin-top: -40px;
-  /* Ensure this section appears above the wave */
+  z-index: 39;
 }
 
 .why-section__inner {
-  max-width: 1200px;
+  max-width: var(--breakpoint-xl);
   margin: 0 auto;
-  padding-left: var(--space-5xl);
-  padding-right: var(--space-5xl);
-  position: relative;
-  z-index: 30;
+  padding: 0 var(--space-lg);
+  text-align: center;
 }
 
 .why-section__title {
   font-family: var(--font-bold);
-  font-size: var(--text-4xl);
-  line-height: 40px;
+  font-size: var(--text-6xl);
+  line-height: 1.1;
   font-weight: bold;
-  text-align: left;
-  margin-bottom: var(--space-lg);
   color: var(--color-text-dark);
-  position: relative;
-  z-index: 20;
+  margin-bottom: var(--space-lg);
 }
 
-/* Subtitle under the Why section title */
 .why-section__subtitle {
   font-family: var(--font-primary);
   font-size: var(--text-xl);
-  line-height: 32px;
-  text-align: left;
-  margin-bottom: var(--space-3xl);
+  line-height: var(--leading-loose);
   color: var(--color-text-dark);
-  position: relative;
-  z-index: 20;
+  margin-bottom: var(--space-4xl);
 }
 
-/* Modular card layout with CSS Grid */
 .why-section__cards {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: var(--space-2xl);
-  margin-top: var(--space-2xl);
-  width: 100%;
-  transition: grid-template-columns 0.3s ease;
-  grid-auto-rows: 1fr; /* Equal height rows */
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: var(--space-3xl);
 }
 
 .why-card {
+  flex-basis: calc(25% - var(--space-3xl) * 3 / 4); /* For 4 cards */
+  min-width: 250px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
   text-align: center;
-  width: 100%;
-  height: 100%;
-  transition: all 0.3s ease;
+  padding: var(--space-xl);
+  background-color: #fff;
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--transition-fast);
 }
 
 .why-card:hover {
   transform: translateY(-5px);
-  transition: transform 0.3s ease;
 }
 
 .why-card:focus-within {
   outline: 2px solid var(--color-accent);
-  outline-offset: 4px;
-  border-radius: var(--border-radius-md);
+  outline-offset: 2px;
 }
 
 .why-card__image {
   width: 180px;
   height: 180px;
   object-fit: contain;
-  margin-bottom: var(--space-lg);
+  margin-bottom: var(--space-md);
 }
 
 .why-card__title {
-  font-family: var(--font-primary);
+  font-family: var(--font-bold);
   font-size: var(--text-xl);
   font-weight: bold;
   color: var(--color-text-dark);
@@ -397,10 +379,9 @@
 }
 
 .why-card__text {
-  font-family: var(--font-primary);
   font-size: var(--text-sm);
-  color: var(--color-text-body);
   line-height: var(--leading-normal);
+  color: var(--color-text-body);
 }
 
 /* Animation effects and toast notifications are now in common.css */
@@ -463,142 +444,212 @@
 
 @media (max-width: var(--breakpoint-md)) {
   .hero__content {
-    padding-left: var(--space-lg);
-    padding-right: var(--space-lg);
+    max-width: 90%;
+    padding-left: var(--space-xl);
   }
   
   .hero__title {
-    font-size: var(--text-6xl);
-    line-height: 52px;
+    font-size: var(--text-7xl);
   }
   
   .hero__subtitle {
     font-size: var(--text-lg);
-    line-height: 28px;
   }
   
   .hero__form {
-    flex-direction: column;
-    gap: var(--space-md);
-    width: 100%;
     max-width: 100%;
-    margin-bottom: var(--space-2xl);
+    padding-right: var(--space-xl);
   }
   
   .form__input {
-    width: 100%;
     max-width: 100%;
-    min-width: 0; /* Reset min-width to allow full responsiveness */
   }
   
   .form__btn {
-    margin-left: 0;
-    width: 100%;
-    min-height: 48px;
-    min-width: 100%; /* Ensure button takes full width */
+    min-width: 100px;
   }
-  
-  /* Ensure form group has proper spacing */
-  .form__group {
-    width: 100%;
-  }
-  
-  /* Hero image styles are now controlled by hero__image-container */
-  
+
   .why-section__inner {
     padding: 0 var(--space-lg);
   }
-  
+
   .why-section__cards {
-    grid-template-columns: 1fr;
-    gap: var(--space-xl);
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-2xl);
   }
-  
+
   .why-card {
-    margin: 0 auto;
-    max-width: 280px;
+    width: 90%;
+    max-width: 400px; /* Limit card width on tablets */
+    text-align: center;
+    align-items: center;
   }
-  
-  /* Embedded why-section responsive styles */
+
+  .why-section__title {
+    font-size: var(--text-5xl) !important;
+    white-space: normal !important; /* Allow text to wrap */
+    overflow: visible !important;
+    text-overflow: clip !important;
+    text-align: center !important; /* Center the text */
+    width: 100% !important;
+    max-width: 100% !important;
+    word-break: break-word !important;
+    overflow-wrap: break-word !important;
+  }
+  .why-section__subtitle {
+    text-align: center !important;
+  }
+  .why-section__cards {
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: var(--space-2xl) !important;
+  }
+  .why-card {
+    width: 90% !important;
+    max-width: 400px !important;
+    text-align: center !important;
+    align-items: center !important;
+  }
+  .why-card__title,
+  .why-card__text {
+    text-align: center !important;
+  }
+  /* Specific overrides for why-section-embedded */
+  .why-section-embedded .why-section__title {
+    font-size: var(--text-5xl) !important;
+    white-space: normal !important;
+    overflow: visible !important;
+    text-overflow: clip !important;
+    text-align: center !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    word-break: break-word !important;
+    overflow-wrap: break-word !important;
+  }
+  .why-section-embedded .why-section__subtitle {
+    text-align: center !important;
+  }
   .why-section-embedded .why-section__cards {
-    grid-template-columns: 1fr;
-    gap: var(--space-xl);
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: var(--space-2xl) !important;
   }
-  
   .why-section-embedded .why-card {
-    margin: 0 auto;
-    max-width: 280px;
+    width: 90% !important;
+    max-width: 400px !important;
+    text-align: center !important;
+    align-items: center !important;
   }
 }
 
 @media (max-width: var(--breakpoint-sm)) {
+  .hero__content {
+    padding-top: var(--space-xl) !important; /* Reduced top padding */
+    padding-left: var(--space-sm) !important;
+    padding-right: var(--space-sm) !important;
+    text-align: center; /* Center the entire content block */
+  }
   .hero__title {
-    font-size: var(--text-4xl);
-    line-height: 40px;
+    font-size: var(--text-7xl) !important; /* Increased font size for 'Coming Soon' */
+    line-height: 1.1 !important;
+    white-space: normal !important;
+    word-break: break-word !important;
+    overflow-wrap: break-word !important;
+    text-align: center !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-bottom: var(--space-md) !important;
   }
-  
-  .hero__title-break {
-    display: block;
-  }
-  
+
   .hero__subtitle {
-    font-size: var(--text-md);
-    line-height: 26px;
+    font-size: var(--text-lg) !important;
+    line-height: 1.3 !important;
+    margin-bottom: var(--space-lg) !important;
+    text-align: center !important;
   }
-  
+
+  .hero__form {
+    width: 100% !important;
+    max-width: 100% !important;
+    justify-content: center !important; /* Center the form itself */
+  }
+
+  .hero__form .form__group {
+    width: 95% !important; /* Increased width */
+    max-width: none !important;
+    margin: 0 auto !important; /* Center the form group */
+  }
+
+  .hero__form .form__input {
+    width: 100% !important; /* Fill parent width */
+    min-width: 0 !important;
+    text-align: left !important;
+    margin: 0 auto !important; /* Center the input */
+  }
+
+  .hero__form .form__btn {
+    width: 95% !important; /* Increased width */
+    min-width: 0 !important;
+    margin: 0 auto !important; /* Center the button */
+    text-align: center !important;
+  }
+
   .why-section__title {
-    font-size: var(--text-2xl);
-    line-height: 34px;
-    text-align: center;
+    font-size: var(--text-4xl) !important;
+    white-space: normal !important;
+    overflow: visible !important;
+    text-overflow: clip !important;
+    text-align: center !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    word-break: break-word !important;
+    overflow-wrap: break-word !important;
   }
-  
   .why-section__subtitle {
-    font-size: var(--text-lg);
-    line-height: 28px;
-    text-align: center;
+    font-size: var(--text-sm) !important;
+    text-align: center !important;
   }
-  
-  /* Embedded why-section responsive styles */
-  .why-section-embedded .why-section__title {
-    font-size: var(--text-2xl);
-    line-height: 34px;
-    text-align: center;
+  .why-section__cards {
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: var(--space-lg) !important;
   }
-  
-  .why-section-embedded .why-section__subtitle {
-    font-size: var(--text-lg);
-    line-height: 28px;
-    text-align: center;
+  .why-card {
+    width: 100% !important;
+    max-width: none !important;
+    text-align: center !important;
+    align-items: center !important;
   }
-  
-  .why-section-embedded .why-card__image {
-    width: 180px;
-    height: 180px;
-  }
-  
-  .why-section-embedded .why-card__title {
-    font-size: var(--text-lg);
-  }
-  
-  .why-section-embedded .why-card__text {
-    font-size: var(--text-sm);
-  }
-  
-  .why-card__image {
-    width: 150px;
-    height: 150px;
-  }
-  
-  .why-card__title {
-    font-size: var(--text-lg);
-  }
-  
+  .why-card__title,
   .why-card__text {
-    font-size: var(--text-sm);
+    text-align: center !important;
   }
-  
-  .why-section {
-    margin-top: 0;
+  /* Specific overrides for why-section-embedded */
+  .why-section-embedded .why-section__title {
+    font-size: var(--text-4xl) !important;
+    white-space: normal !important;
+    overflow: visible !important;
+    text-overflow: clip !important;
+    text-align: center !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    word-break: break-word !important;
+    overflow-wrap: break-word !important;
+  }
+  .why-section-embedded .why-section__subtitle {
+    text-align: center !important;
+  }
+  .why-section-embedded .why-section__cards {
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: var(--space-lg) !important;
+  }
+  .why-section-embedded .why-card {
+    width: 100% !important;
+    max-width: none !important;
+    text-align: center !important;
+    align-items: center !important;
   }
 }
 
@@ -679,8 +730,8 @@
   justify-content: space-between;
   align-items: center;
   background-color: var(--color-background);
-  padding: 0 var(--space-5xl);
-  height: 100px;
+  padding: 0 var(--space-md);
+  height: 80px;
   border-bottom: none;
   position: sticky;
   top: 0;
@@ -723,4 +774,28 @@
   background-color: #e07b00;
   color: #fff;
   text-decoration: none;
+}
+
+@media (min-width: 769px) {
+  .why-section__cards,
+  .why-section-embedded .why-section__cards {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start; /* Align items to the top if they have different heights */
+  }
+
+  .why-card,
+  .why-section-embedded .why-card {
+    flex-basis: 23%; /* Adjusted to encourage 4 cards per row */
+    min-width: unset; /* Allow flexibility in width for smaller sizes */
+    max-width: none; /* Remove any max-width constraints from smaller breakpoints */
+    text-align: center;
+  }
+
+  .why-section__title,
+  .why-section-embedded .why-section__title {
+    white-space: normal; /* Allow normal wrapping on larger screens */
+    text-align: center; /* Center the title */
+  }
 }

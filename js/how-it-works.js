@@ -447,6 +447,117 @@ class ScrollIndicator {
   }
 }
 
+// Email Subscription Handler (for how-it-works page)
+class HowItWorksEmailSubscription {
+  constructor() {
+    this.form = document.getElementById('hiw-signup-form');
+    this.emailInput = this.form?.querySelector('input[type="email"]');
+    this.submitBtn = this.form?.querySelector('.cta-form__btn');
+    this.toast = document.getElementById('toast');
+    
+    if (this.form && this.emailInput) {
+      this.init();
+    }
+  }
+
+  init() {
+    this.form.addEventListener('submit', (e) => this.handleSubmit(e));
+  }
+
+  async handleSubmit(e) {
+    e.preventDefault();
+    
+    const email = this.emailInput.value.trim();
+    
+    // Basic validation
+    if (!email || !this.validateEmail(email)) {
+      this.showToast('Please enter a valid email address', 'error');
+      return;
+    }
+
+    // Set loading state
+    this.setLoadingState(true);
+    
+    try {
+      const response = await this.submitEmail(email);
+      
+      if (response.success) {
+        this.showToast(response.message);
+        this.form.reset();
+      } else {
+        this.showToast(response.message || 'Something went wrong. Please try again.', 'error');
+      }
+    } catch (error) {
+      console.error('Subscription error:', error);
+      this.showToast('Network error. Please check your connection and try again.', 'error');
+    } finally {
+      this.setLoadingState(false);
+    }
+  }
+
+  async submitEmail(email) {
+    const endpoint = "https://script.google.com/macros/s/AKfycbxMtHQ5h6LNtIZmR9zPQuf3DQuGGBImS7Wll5GfK8Ox4kYg9C3VYj2U24WExBdUj0z-/exec"; 
+
+    try {
+      const response = await fetch(endpoint, {
+        method: 'POST',
+        body: new URLSearchParams({ email: email }),
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      });
+
+      const text = await response.text();
+      return { success: text === "Success", message: text === "Success" ? "Thanks for signing up!" : "Error: " + text };
+    } catch (err) {
+      console.error(err);
+      return { success: false, message: "Something went wrong." };
+    }
+  }
+
+  validateEmail(email) {
+    // Use shared utility function from core.js for consistency
+    if (window.validateEmail) {
+      return window.validateEmail(email);
+    }
+    
+    // Fallback if the core utility isn't available
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  }
+  
+  setLoadingState(isLoading) {
+    if (!this.submitBtn) return;
+    
+    if (isLoading) {
+      this.submitBtn.disabled = true;
+      this.submitBtn.textContent = 'Sending...';
+    } else {
+      this.submitBtn.disabled = false;
+      this.submitBtn.textContent = 'Join Waitlist';
+    }
+  }
+  
+  showToast(message, type = 'success') {
+    if (!this.toast) return;
+    
+    // Use shared Toast utility from core.js
+    if (typeof window.Toast === 'function') {
+      const toast = new window.Toast();
+      toast.show(message, type, 3000);
+    } else {
+      // Fallback if Toast utility is not available
+      this.toast.textContent = message;
+      this.toast.className = `toast toast--${type}`;
+      this.toast.classList.add('show');
+      
+      setTimeout(() => {
+        this.toast.classList.remove('show');
+      }, 3000);
+    }
+  }
+}
+
 /**
  * Main initialization function for How It Works page
  * Initializes all components and tracks page view
@@ -460,6 +571,7 @@ function init() {
     new PhoneImageLoader();
     new PerformanceMonitor();
     new ScrollIndicator();
+    new HowItWorksEmailSubscription();
   } catch (error) {
     console.error('Error initializing How It Works components:', error);
   }

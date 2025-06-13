@@ -97,64 +97,53 @@ function smoothScrollTo(target, duration = 800) {
 }
 
 // Mobile Menu Toggle
-class MobileMenu {
-  constructor() {
-    this.toggle = document.querySelector('.header__menu-toggle');
-    this.nav = document.querySelector('.header__mobile-nav');
-    this.isOpen = false;
-    
-    if (this.toggle && this.nav) {
-      this.init();
+const menuToggle = document.querySelector('.header__menu-toggle');
+const mobileNav = document.querySelector('.header__mobile-nav');
+const body = document.body;
+const overlay = document.querySelector('.header__mobile-nav-overlay');
+
+if (menuToggle && mobileNav) {
+  menuToggle.addEventListener('click', () => {
+    const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
+    menuToggle.setAttribute('aria-expanded', !isExpanded);
+    mobileNav.classList.toggle('is-open');
+    mobileNav.setAttribute('aria-hidden', isExpanded);
+    body.style.overflow = isExpanded ? '' : 'hidden';
+    if (overlay) overlay.style.display = isExpanded ? 'none' : 'block';
+  });
+
+  if (overlay) {
+    overlay.addEventListener('click', () => {
+      menuToggle.setAttribute('aria-expanded', 'false');
+      mobileNav.classList.remove('is-open');
+      mobileNav.setAttribute('aria-hidden', 'true');
+      body.style.overflow = '';
+      overlay.style.display = 'none';
+    });
+  }
+
+  document.addEventListener('click', (event) => {
+    if (mobileNav.classList.contains('is-open') && 
+        !mobileNav.contains(event.target) && 
+        !menuToggle.contains(event.target) &&
+        (!overlay || !overlay.contains(event.target))) {
+      menuToggle.setAttribute('aria-expanded', 'false');
+      mobileNav.classList.remove('is-open');
+      mobileNav.setAttribute('aria-hidden', 'true');
+      body.style.overflow = '';
+      if (overlay) overlay.style.display = 'none';
     }
-  }
+  });
 
-  init() {
-    this.toggle.addEventListener('click', () => this.toggleMenu());
-    
-    // Close menu when clicking on links
-    const links = this.nav.querySelectorAll('a');
-    links.forEach(link => {
-      link.addEventListener('click', () => this.closeMenu());
-    });
-
-    // Close menu when clicking outside
-    document.addEventListener('click', (e) => {
-      if (this.isOpen && !this.toggle.contains(e.target) && !this.nav.contains(e.target)) {
-        this.closeMenu();
-      }
-    });
-
-    // Close menu on escape key
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && this.isOpen) {
-        this.closeMenu();
-      }
-    });
-  }
-
-  toggleMenu() {
-    if (this.isOpen) {
-      this.closeMenu();
-    } else {
-      this.openMenu();
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && mobileNav.classList.contains('is-open')) {
+      menuToggle.setAttribute('aria-expanded', 'false');
+      mobileNav.classList.remove('is-open');
+      mobileNav.setAttribute('aria-hidden', 'true');
+      body.style.overflow = '';
+      if (overlay) overlay.style.display = 'none';
     }
-  }
-
-  openMenu() {
-    this.isOpen = true;
-    this.toggle.setAttribute('aria-expanded', 'true');
-    this.nav.setAttribute('aria-hidden', 'false');
-    this.nav.classList.add('is-open');
-    document.body.style.overflow = 'hidden'; // Prevent scroll
-  }
-
-  closeMenu() {
-    this.isOpen = false;
-    this.toggle.setAttribute('aria-expanded', 'false');
-    this.nav.setAttribute('aria-hidden', 'true');
-    this.nav.classList.remove('is-open');
-    document.body.style.overflow = ''; // Restore scroll
-  }
+  });
 }
 
 // Toast Notification Utility

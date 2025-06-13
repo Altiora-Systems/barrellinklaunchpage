@@ -54,7 +54,20 @@
     <a href="index.html" aria-label="BarrelLink Home">
       <img src="assets/images/Barrel Link_Tagline.png" alt="BarrelLink Logo" class="header__logo" width="200" height="38">
     </a>
-    <a href="how-it-works.html" class="header__howitworks-btn">How It Works</a>
+    <button class="header__menu-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="mobile-nav">
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+    </button>
+    <nav class="header__nav">
+      <a href="how-it-works.html" class="nav__btn">How It Works</a>
+    </nav>
+    <div id="mobile-nav" class="header__mobile-nav" aria-hidden="true">
+      <nav>
+        <a href="how-it-works.html" class="mobile-nav__btn">How It Works</a>
+      </nav>
+    </div>
+    <div class="header__mobile-nav-overlay"></div>
   </header>
 
   <main class="hero" role="main">

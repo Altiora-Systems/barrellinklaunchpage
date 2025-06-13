@@ -78,11 +78,13 @@ document.addEventListener('DOMContentLoaded', () => {
 // Email Subscription Handler
 class EmailSubscription {
   constructor() {
-    this.form = document.getElementById('signup-form');
+    this.form = document.getElementById('homepage-signup');
     this.emailInput = this.form?.querySelector('input[type="email"]');
     this.submitBtn = this.form?.querySelector('.form__btn');
     this.toast = document.getElementById('toast');
     
+    console.log('EmailSubscription constructor: Form found?', !!this.form);
+
     if (this.form && this.emailInput) {
       this.init();
     }
@@ -98,6 +100,8 @@ class EmailSubscription {
     
     const email = this.emailInput.value.trim();
     
+    console.log('Attempting to submit email:', email);
+
     // Basic validation
     if (!email || !this.validateEmail(email)) {
       this.showToast('Please enter a valid email address');
@@ -112,7 +116,7 @@ class EmailSubscription {
       const response = await this.submitEmail(email);
       
       if (response.success) {
-        this.showToast(`Thanks! We'll notify ${email} when we launch.`);
+        this.showToast(response.message);
         this.form.reset();
       } else {
         this.showToast(response.message || 'Something went wrong. Please try again.');
@@ -126,13 +130,23 @@ class EmailSubscription {
   }
 
   async submitEmail(email) {
-    // Simulate API call with delay
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        // For demo purposes, simulate success
-        resolve({ success: true });
-      }, 1000);
-    });
+    const endpoint = "https://script.google.com/macros/s/AKfycbxMtHQ5h6LNtIZmR9zPQuf3DQuGGBImS7Wll5GfK8Ox4kYg9C3VYj2U24WExBdUj0z-/exec"; 
+
+    try {
+      const response = await fetch(endpoint, {
+        method: 'POST',
+        body: new URLSearchParams({ email: email }),
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      });
+
+      const text = await response.text();
+      return { success: text === "Success", message: text === "Success" ? "Thanks for signing up!" : "Error: " + text };
+    } catch (err) {
+      console.error(err);
+      return { success: false, message: "Something went wrong." };
+    }
   }
 
   validateEmail(email) {
@@ -183,6 +197,7 @@ class EmailSubscription {
  * Initializes all components and tracks page view
  */
 function init() {
+  console.log('init() function called');
   // Initialize the email subscription form
   new EmailSubscription();
   
